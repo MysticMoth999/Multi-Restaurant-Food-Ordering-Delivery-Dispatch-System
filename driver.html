@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Khu vực tài xế — GoMeal</title>
+    <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+    <header class="topbar"><div class="container topbar-inner">
+        <button class="mobile-menu" type="button" data-nav-toggle aria-label="Mở menu" aria-expanded="false">☰</button>
+        <nav class="main-nav" aria-label="Điều hướng chính"><a href="./index.html">Trang chủ</a><a class="active" href="./driver.html">Tài xế</a></nav>
+        <div class="top-actions"><span class="user-chip"><span class="avatar" data-user-avatar></span><span data-user-name></span></span><a class="button outline" href="#" data-logout>Đăng xuất</a></div>
+    </div></header>
+    <div class="workspace">
+        <aside class="sidebar">
+            <div><div class="sidebar-label">Khu vực tài xế</div><nav class="side-links" aria-label="Khu vực tài xế"><a class="side-link active" href="#board"><span class="ico">🛵</span>Bảng việc</a><a class="side-link" href="#earnings"><span class="ico">💰</span>Thu nhập</a><a class="side-link" href="#history"><span class="ico">🧾</span>Lịch sử đơn</a><a class="side-link" href="#help"><span class="ico">💬</span>Hỗ trợ</a></nav></div>
+            <div class="sidebar-user"><span class="avatar" data-user-avatar></span><span><strong data-user-name></strong><small>Tài xế đối tác</small></span></div>
+        </aside>
+        <main class="workspace-main" id="board">
+            <div class="workspace-heading"><div><h1>Chuyến đi của tôi</h1><p>Nhận lời mời giao đơn và cập nhật từng bước giao hàng.</p></div><span class="pill blue" id="today"></span></div>
+            <section class="driver-banner">
+                <div><h2 id="availability-label">Đang tải…</h2><p id="availability-note"></p></div>
+                <button class="switch" type="button" role="switch" aria-label="Trực tuyến nhận đơn" aria-checked="false" data-availability></button>
+            </section>
+            <section class="stats-grid" id="earnings" aria-label="Tổng quan tài xế"></section>
+            <section class="panel card">
+                <div class="panel-heading"><div><h2>Lời mời nhận đơn</h2><span class="muted" style="font-size:.8rem">Hệ thống mời tài xế trực tuyến gần nhà hàng nhất. Bỏ qua thì đơn được mời cho người kế tiếp.</span></div></div>
+                <div class="order-list" id="offer"></div>
+            </section>
+            <section class="panel card" style="margin-top:18px">
+                <div class="panel-heading"><h2>Đơn đang giao</h2></div>
+                <div class="order-list" id="active"></div>
+            </section>
+            <section class="panel card" id="history" style="margin-top:18px">
+                <div class="panel-heading"><h2>Đơn đã giao gần đây</h2></div>
+                <div class="activity-list" id="history-list"></div>
+            </section>
+            <section class="panel card" id="help" style="margin-top:18px">
+                <div class="panel-heading"><h2>Hỗ trợ tài xế</h2><button class="button outline small" type="button" data-demo-toast="Đội ngũ hỗ trợ sẽ sớm liên hệ với bạn (demo).">Liên hệ hỗ trợ</button></div>
+                <p class="muted" style="margin:0;font-size:.85rem">Cần giúp đỡ với chuyến đi? Đội ngũ GoMeal luôn sẵn sàng hỗ trợ bạn.</p>
+            </section>
+            <p class="notice">Bản demo: dữ liệu lấy từ backend giả lập (mock-backend.js). Nếu trình duyệt không cho lấy vị trí, trang dùng vị trí mô phỏng gần nhà hàng.</p>
+        </main>
+    </div>
+    <script src="./mock-backend.js"></script>
+    <script src="./api.js"></script>
+    <script src="./app.js"></script>
+    <script src="./driver.js"></script>
+</body>
+</html>

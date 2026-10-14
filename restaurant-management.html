@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản lý nhà hàng — GoMeal</title>
+    <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+    <header class="topbar"><div class="container topbar-inner">
+        <button class="mobile-menu" type="button" data-nav-toggle aria-label="Mở menu" aria-expanded="false">☰</button>
+        <nav class="main-nav" aria-label="Điều hướng chính"><a href="./index.html">Trang chủ</a><a class="active" href="./restaurant-management.html">Nhà hàng</a></nav>
+        <div class="top-actions"><span class="user-chip"><span class="avatar" data-user-avatar></span><span data-user-name></span></span><a class="button outline" href="#" data-logout>Đăng xuất</a></div>
+    </div></header>
+    <div class="workspace">
+        <aside class="sidebar">
+            <div><div class="sidebar-label" data-restaurant-name>Nhà hàng</div><nav class="side-links" aria-label="Quản lý nhà hàng"><a class="side-link active" href="#top"><span class="ico">▦</span>Tổng quan</a><a class="side-link" href="#orders"><span class="ico">🧾</span>Đơn hàng</a><a class="side-link" href="#menu"><span class="ico">🍣</span>Thực đơn</a><a class="side-link" href="#settings"><span class="ico">⚙️</span>Cài đặt nhà hàng</a></nav></div>
+            <div class="sidebar-user"><span class="avatar" data-user-avatar></span><span><strong data-user-name></strong><small>Quản lý nhà hàng</small></span></div>
+        </aside>
+        <main class="workspace-main" id="top">
+            <div class="workspace-heading"><div><h1>Xin chào, <span data-restaurant-name>…</span> 👋</h1><p>Đây là tình hình nhà hàng của bạn hôm nay.</p></div><div class="heading-actions"><span id="open-status"></span><a class="button outline small" id="storefront-link" href="./hokkaidosachi.html">Xem trang cửa hàng ↗</a></div></div>
+            <section class="stats-grid" id="stats" aria-label="Tổng quan nhà hàng"></section>
+            <div class="dashboard-grid">
+                <section class="panel card" id="orders">
+                    <div class="panel-heading"><div><h2>Đơn hàng</h2><span class="muted" style="font-size:.8rem">Mỗi đơn chỉ hiện thao tác hợp lệ với trạng thái hiện tại</span></div><span class="pill" id="pending-count"></span></div>
+                    <div class="activity-list" id="order-list"></div>
+                </section>
+                <section class="panel card" id="reviews"><div class="panel-heading"><h2>Đánh giá gần đây</h2><span class="pill" id="rating-pill"></span></div><p style="margin:0;font-size:.85rem">“Sushi tươi, đóng gói cẩn thận. Sẽ đặt lại!”</p><p class="muted" style="margin:7px 0 0;font-size:.77rem">— Khách hàng ẩn danh · Hôm nay</p><button class="button outline small" style="margin-top:15px" data-demo-toast="Danh sách đánh giá chưa có trong bản demo.">Xem đánh giá</button></section>
+            </div>
+            <section class="panel card" id="menu" style="margin-top:18px">
+                <div class="panel-heading"><div><h2>Quản lý thực đơn</h2><span class="muted" style="font-size:.8rem">Giá ở đây là giá khách thấy trên trang cửa hàng</span></div><button class="button primary small" type="button" id="add-menu-item">＋ Thêm món</button></div>
+                <div class="table-toolbar"><input class="control" id="menu-search" type="search" placeholder="Tìm tên món..." aria-label="Tìm tên món"><select class="control" id="menu-category" aria-label="Lọc nhóm món"><option value="">Tất cả nhóm món</option></select></div>
+                <div class="table-wrap"><table class="data-table"><thead><tr><th>TÊN MÓN</th><th>NHÓM MÓN</th><th>GIÁ BÁN</th><th>TRẠNG THÁI</th><th></th></tr></thead><tbody id="menu-items"></tbody></table></div>
+            </section>
+            <section class="panel card" id="settings" style="margin-top:18px"><form id="settings-form"><div class="panel-heading"><div><h2>Thông tin nhà hàng</h2><span class="muted" style="font-size:.8rem">Thông tin hiển thị với khách hàng</span></div><button class="button outline small" type="submit">Lưu thay đổi</button></div><div class="feature-grid"><div class="field"><label for="rest-name">Tên nhà hàng</label><input class="control" id="rest-name" name="name" required></div><div class="field"><label for="rest-cuisine">Loại ẩm thực</label><input class="control" id="rest-cuisine" name="cuisine" required></div><div class="field"><label for="rest-hours">Thời gian hoạt động</label><input class="control" id="rest-hours" name="hours" required></div></div></form></section>
+            <p class="notice">Bản demo: dữ liệu lưu trong trình duyệt qua backend giả lập (mock-backend.js), dùng chung với trang khách, tài xế và quản trị.</p>
+        </main>
+    </div>
+    <dialog id="item-dialog">
+        <form class="dialog-form" id="item-form">
+            <h2 id="item-dialog-title">Thêm món mới</h2>
+            <div class="field" style="margin:0"><label for="item-name">Tên món</label><input class="control" id="item-name" name="name" required placeholder="Ví dụ: Nigiri cá hồi"></div>
+            <div class="field" style="margin:0"><label for="item-category">Nhóm món</label><select class="control" id="item-category" name="categoryId"></select></div>
+            <div class="field" style="margin:0"><label for="item-price">Giá bán (đ)</label><input class="control" id="item-price" name="price" type="number" min="1000" step="1000" required placeholder="45000"></div>
+            <p class="form-error" id="item-error" role="alert"></p>
+            <div class="dialog-actions"><button class="button outline" type="button" data-dialog-close>Hủy</button><button class="button primary" type="submit" id="item-submit">Thêm món</button></div>
+        </form>
+    </dialog>
+    <dialog id="cancel-dialog">
+        <form class="dialog-form" id="cancel-form">
+            <h2>Hủy đơn <span id="cancel-code"></span></h2>
+            <div class="field" style="margin:0"><label for="cancel-reason">Lý do hủy (bắt buộc)</label><input class="control" id="cancel-reason" name="reason" required placeholder="Ví dụ: Hết nguyên liệu"></div>
+            <p class="form-error" id="cancel-error" role="alert"></p>
+            <div class="dialog-actions"><button class="button outline" type="button" data-dialog-close>Quay lại</button><button class="button primary" type="submit">Hủy đơn</button></div>
+        </form>
+    </dialog>
+    <script src="./mock-backend.js"></script>
+    <script src="./api.js"></script>
+    <script src="./app.js"></script>
+    <script src="./restaurant.js"></script>
+</body>
+</html>

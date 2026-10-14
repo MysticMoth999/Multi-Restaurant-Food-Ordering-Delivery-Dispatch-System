@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <title>Thực đơn — GoMeal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            --blue: #176db3;
+            --red: #e31837;
+            --yellow: #ffc900;
+            --bg: #f4f6f8;
+            --card: #fff;
+            --ink: #14212b;
+            --mute: #5d6b76;
+            --line: #dde3e8;
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px);
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #10181f;
+                --card: #18232c;
+                --ink: #eef3f6;
+                --mute: #9db0bd;
+                --line: #2b3a46;
+                --blue: #4aa3d8;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #10181f;
+            --card: #18232c;
+            --ink: #eef3f6;
+            --mute: #9db0bd;
+            --line: #2b3a46;
+            --blue: #4aa3d8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+            line-height: 1.5;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--red);
+            outline-offset: 2px;
+        }
+
+        header {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 20;
+            background: var(--card);
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px max(20px, calc((100vw - 1110px) / 2));
+            border-bottom: 1px solid #edf0f3;
+            box-shadow: 0 2px 12px #14212b0a;
+        }
+
+        .logo {
+            color: var(--blue);
+            font-weight: 800;
+            font-size: 1.18rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .logo b {
+            color: #14212b;
+        }
+
+        .site-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-left: auto;
+            color: var(--mute);
+            font-size: .82rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .site-links a:hover {
+            color: var(--blue);
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 120px;
+            flex: 1;
+            background: #f0f1f3;
+            border-radius: 999px;
+            padding: 0 12px;
+            color: var(--mute);
+        }
+
+        .search input {
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--ink);
+            font: inherit;
+            padding: 10px 0;
+        }
+
+        .search input::placeholder {
+            color: #68717d;
+        }
+
+        .account {
+            flex: 0 0 auto;
+            margin-left: auto;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 9px 15px;
+            background: #fff;
+            color: var(--ink);
+            font-weight: 700;
+            font-size: .9rem;
+        }
+
+        .cartbtn {
+            background: #fff;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 8px 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .hero {
+            height: clamp(210px, 25vw, 276px);
+            max-width: 1110px;
+            margin: 6px auto 0;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #e9e9ed;
+        }
+
+        .hero > div {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 48%;
+        }
+
+        .wrap {
+            max-width: 1110px;
+            margin: auto;
+            padding: 0 0 28px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 22px;
+            overflow-x: auto;
+            padding: 0 0 2px;
+            margin: 22px 0 22px;
+            border-bottom: 1px solid var(--line);
+            scrollbar-width: thin;
+        }
+
+        .tab {
+            background: none;
+            border: 0;
+            padding: 0 0 12px;
+            font-weight: 600;
+            color: var(--mute);
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            font-size: .87rem;
+        }
+
+        .tab[aria-selected=true] {
+            color: var(--ink);
+            border-color: var(--yellow);
+        }
+
+        .restaurant {
+            position: relative;
+            padding: 48px 0 15px;
+        }
+
+        .restaurant-avatar {
+            position: absolute;
+            top: -42px;
+            left: 0;
+            width: 84px;
+            height: 84px;
+            object-fit: cover;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 3px 10px #0002;
+        }
+
+        .restaurant-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .restaurant h1 {
+            margin: 0;
+            font-size: clamp(1.65rem, 3vw, 2rem);
+            line-height: 1.25;
+            letter-spacing: -.04em;
+        }
+
+        .favorite {
+            flex: 0 0 auto;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 15px;
+            background: #fff;
+            color: var(--ink);
+            box-shadow: 0 6px 22px #14212b14;
+        }
+
+        .restaurant-meta,
+        .restaurant-address {
+            color: #46515e;
+            font-size: .86rem;
+        }
+
+        .restaurant-meta {
+            margin-top: 3px;
+        }
+
+        .rating-star {
+            color: #f5ad00;
+        }
+
+        .restaurant-address {
+            margin: 5px 0 10px;
+        }
+
+        .info-button {
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 7px 14px;
+            background: #fff;
+            color: var(--ink);
+            font-size: .82rem;
+            font-weight: 600;
+        }
+
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 270px;
+            align-items: start;
+            gap: 20px;
+            margin-top: 26px;
+        }
+
+        .catalog-main {
+            min-width: 0;
+        }
+
+        .menu-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin: 0 0 12px;
+        }
+
+        .menu-heading h2 {
+            margin: 0;
+            font-size: 1.35rem;
+        }
+
+        .menu-search {
+            flex: 0 1 270px;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 15px;
+            background: #f0f1f3;
+            color: var(--ink);
+            font: inherit;
+            font-size: .82rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .item {
+            background: var(--card);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--line);
+        }
+
+        .pic {
+            font-size: 4.2rem;
+            text-align: center;
+            background: linear-gradient(#fff3, #176db314);
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .item .b {
+            padding: 12px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .item h3 {
+            margin: 0;
+            font-size: 1.05rem;
+        }
+
+        .item p {
+            margin: 0;
+            color: var(--mute);
+            font-size: .85rem;
+            flex: 1;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .price {
+            font-weight: 800;
+            color: var(--red);
+            font-size: 1.05rem;
+        }
+
+        .add {
+            background: var(--red);
+            color: #fff;
+            border: 0;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-weight: 700;
+        }
+
+        .empty {
+            padding: 30px;
+            text-align: center;
+            color: var(--mute);
+        }
+
+        .cart-panel {
+            position: sticky;
+            top: 86px;
+            min-width: 0;
+            background: transparent;
+            border-radius: 12px;
+        }
+
+        .cart-panel h2 {
+            margin: 0 0 16px;
+            font-size: 1.15rem;
+        }
+
+        .cart-empty {
+            min-height: 176px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 22px 18px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--mute);
+            text-align: center;
+        }
+
+        .cart-empty-icon {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #f0f1f3;
+            font-size: 1.5rem;
+        }
+
+        .lines {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .line {
+            display: grid;
+            grid-template-columns: 54px minmax(0, 1fr);
+            gap: 4px 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .line-pic {
+            grid-row: span 3;
+            width: 54px;
+            height: 54px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #f0f1f3;
+        }
+
+        .line-title {
+            font-size: .87rem;
+            line-height: 1.35;
+        }
+
+        .line-detail {
+            color: var(--mute);
+            font-size: .73rem;
+            line-height: 1.4;
+        }
+
+        .line-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 3px;
+        }
+
+        .line-price {
+            font-size: .82rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .qty {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: .82rem;
+        }
+
+        .qty button {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+        }
+
+        .sum {
+            padding: 12px 0 0;
+        }
+
+        .sum div {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 5px 0;
+            color: var(--mute);
+            font-size: .85rem;
+        }
+
+        .sum .t {
+            font-weight: 800;
+            font-size: .98rem;
+            margin: 5px 0 12px;
+            padding-top: 11px;
+            border-top: 1px solid var(--line);
+            color: var(--ink);
+        }
+
+        .full {
+            width: 100%;
+            background: var(--red);
+            color: #fff;
+            border: 0;
+            border-radius: 10px;
+            padding: 13px;
+            font-weight: 800;
+        }
+
+        .cart-panel .full {
+            background: var(--yellow);
+            color: #171717;
+        }
+
+        .full:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        dialog {
+            border: 0;
+            border-radius: 16px;
+            padding: 0;
+            width: min(440px, 92vw);
+            background: var(--card);
+            color: var(--ink);
+        }
+
+        dialog::backdrop {
+            background: #0008;
+        }
+
+        dialog form {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        dialog h3 {
+            margin: 0;
+        }
+
+        fieldset {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            margin: 0;
+            padding: 8px 12px;
+        }
+
+        legend {
+            font-weight: 700;
+            padding: 0 6px;
+        }
+
+        label {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        input[type=text],
+        input[type=tel] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: var(--bg);
+            color: var(--ink);
+            font: inherit;
+        }
+
+        .gh {
+            background: var(--bg);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 11px;
+        }
+
+        .btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btns > * {
+            flex: 1;
+        }
+
+        .err {
+            color: var(--red);
+            font-weight: 600;
+            min-height: 1.2em;
+            margin: 0;
+        }
+
+        footer {
+            background: #f4f6f8;
+            color: var(--mute);
+            text-align: center;
+            padding: 24px 20px;
+            font-size: .85rem;
+            border-top: 1px solid var(--line);
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            transform: translateX(-50%);
+            background: #14212b;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 999px;
+            z-index: 60;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s;
+        }
+
+        .toast.on {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        @media(max-width: 600px) {
+            header {
+                gap: 9px;
+                padding: 9px 12px;
+            }
+            .site-links {
+                display: none;
+            }
+            .cartbtn {
+                margin-left: auto;
+            }
+            .account {
+                display: none;
+            }
+            .hero {
+                height: 190px;
+                margin: 5px 10px 0;
+                border-radius: 12px;
+            }
+            .wrap {
+                padding: 0 14px 24px;
+            }
+            .restaurant {
+                padding-top: 48px;
+            }
+            .restaurant-avatar {
+                left: 0;
+            }
+            .restaurant-meta {
+                font-size: .78rem;
+            }
+            .menu-heading {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 22px;
+            }
+            .menu-search {
+                flex-basis: auto;
+            }
+            .tabs {
+                gap: 18px;
+                margin: 18px 0;
+            }
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+        }
+
+        @media(max-width: 900px) {
+            .catalog-layout {
+                grid-template-columns: 1fr;
+            }
+            .cart-panel {
+                position: static;
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 1150px) {
+            .hero {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .wrap {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+
+        /* Bổ sung: tài khoản trên header, món tạm hết, giỏ chờ báo giá, hộp đặt hàng thành công */
+        .header-account { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: .88rem; font-weight: 600; }
+        .header-account .account, header > .account:first-child { margin-left: 0; }
+        .add:disabled { background: #c8d0d6; cursor: not-allowed; }
+        .item.unavailable .pic { filter: grayscale(.85); opacity: .7; }
+        .tag-off { align-self: flex-start; padding: 2px 8px; border-radius: 999px; background: #ffeaed; color: #aa1830; font-size: .74rem; font-weight: 700; }
+        .sum.loading span:last-child { color: var(--mute); }
+        .cart-note { margin: 8px 0 0; color: var(--mute); font-size: .78rem; }
+        .cart-error { margin: 10px 0 0; color: var(--red); font-size: .85rem; font-weight: 600; }
+        .hint { color: var(--mute); font-size: .8rem; margin: -6px 0 0; }
+        .receipt { display: grid; gap: 6px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; font-size: .92rem; }
+        .receipt div { display: flex; justify-content: space-between; gap: 12px; }
+        .receipt .t { font-weight: 800; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 2px; }
+        .toast.show { opacity: 1; }
+        .track-link { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+        @media(max-width: 600px) {
+            .header-account .account { display: inline-block; padding: 7px 11px; font-size: .82rem; }
+            .header-account .who { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="account" href="./index.html">← Trang chủ</a>
+        <div class="header-account" data-account><a class="account" href="./login.html" data-login-link>Đăng nhập</a></div>
+    </header>
+    <section class="hero">
+        <div><img id="restaurantCover" src="./hokkaidobackground.jpg" alt="Không gian và món ăn của nhà hàng"></div>
+    </section>
+
+    <main class="wrap" id="menu">
+        <section class="restaurant" aria-label="Thông tin nhà hàng">
+            <img class="restaurant-avatar" id="restaurantLogo" src="./hokkaidosachi.png" alt="Logo nhà hàng">
+            <div class="restaurant-heading">
+                <h1 id="restaurantName">Đang tải…</h1>
+            </div>
+            <div class="restaurant-meta"><span class="rating-star">★</span> <b id="restaurantRating">–</b> (<span id="restaurantRatingCount">0</span> đánh giá) &nbsp;·&nbsp; <span id="restaurantCuisine"></span> &nbsp;·&nbsp; <span id="restaurantAddress"></span></div>
+        </section>
+
+        <div class="catalog-layout">
+            <section class="catalog-main" aria-label="Danh sách món ăn">
+                <div class="menu-heading">
+                    <h2>Thực đơn</h2>
+                    <input class="menu-search" id="menuSearch" type="search" placeholder="⌕  Tìm kiếm trong thực đơn" aria-label="Tìm món trong thực đơn">
+                </div>
+                <div class="tabs" role="tablist" id="tabs"></div>
+                <div class="grid" id="grid"></div>
+            </section>
+
+            <aside class="cart-panel" id="cart" aria-label="Giỏ hàng của tôi">
+                <h2>Giỏ hàng của tôi</h2>
+                <div class="lines" id="lines"></div>
+                <p class="cart-error" id="cartError" role="alert" hidden></p>
+                <div class="sum" id="cartSummary" hidden>
+                    <div><span>Tiền món</span><span id="sub">–</span></div>
+                    <div><span>Phí giao hàng</span><span id="fee">–</span></div>
+                    <div class="t"><span>Tổng cộng</span><span id="tot">–</span></div>
+                    <button class="full" id="checkout" disabled>Đặt hàng</button>
+                    <p class="cart-note">Giá và tổng tiền do hệ thống tính lại mỗi khi giỏ thay đổi.</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>© bản demo, menu và giá chỉ để minh hoạ. Thanh toán là mô phỏng, không phát sinh giao dịch thật.</footer>
+
+    <dialog id="optD">
+        <form method="dialog" id="optF"></form>
+    </dialog>
+
+    <dialog id="coD">
+        <form id="coF" novalidate>
+            <h3>Xác nhận đặt hàng</h3>
+            <label style="display: block">Địa chỉ nhận hàng
+                <input type="text" id="addr" placeholder="Số nhà, đường, quận" autocomplete="street-address" required>
+            </label>
+            <label style="display: block">Số điện thoại liên hệ
+                <input type="tel" id="phone" placeholder="0912 345 678" autocomplete="tel" inputmode="tel" required>
+            </label>
+            <p class="hint" id="phoneHint"></p>
+            <fieldset>
+                <legend>Phương thức thanh toán</legend>
+                <label><input type="radio" name="pay" value="COD" checked> Tiền mặt khi nhận</label>
+                <label><input type="radio" name="pay" value="MOCK_WALLET"> Ví điện tử</label>
+                <label><input type="radio" name="pay" value="MOCK_CARD"> Thẻ</label>
+            </fieldset>
+            <div class="receipt">
+                <div><span>Tiền món</span><span id="coSub"></span></div>
+                <div><span>Phí giao hàng</span><span id="coFee"></span></div>
+                <div class="t"><span>Tổng tiền cuối</span><span id="coTot"></span></div>
+            </div>
+            <p class="err" id="coErr" role="alert"></p>
+            <div class="btns">
+                <button type="button" class="gh" id="coX">Quay lại</button>
+                <button class="full" id="coSubmit">Đặt hàng</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="doneD">
+        <form method="dialog">
+            <h3>Đặt hàng thành công 🎉</h3>
+            <p style="margin:0">Mã đơn <b id="doneCode"></b> · <span id="doneStatus"></span></p>
+            <div class="receipt">
+                <div><span>Tiền món</span><span id="doneSub"></span></div>
+                <div><span>Phí giao hàng</span><span id="doneFee"></span></div>
+                <div class="t"><span>Tổng cộng</span><span id="doneTot"></span></div>
+                <div><span>Thanh toán</span><span id="donePay"></span></div>
+            </div>
+            <div class="btns">
+                <button class="gh">Đóng</button>
+                <a class="full track-link" id="doneTrack" href="./orders.html">Theo dõi đơn</a>
+            </div>
+        </form>
+    </dialog>
+    <div class="toast" id="toast" role="status"></div>
+
+    <script src="./mock-backend.js"></script>
+    <script src="./api.js"></script>
+    <script src="./app.js"></script>
+    <script src="./menu.js"></script>
+</body>
+</html>

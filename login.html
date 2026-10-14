@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập — GoMeal</title>
+    <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+    <header class="topbar login-topbar">
+        <div class="container topbar-inner">
+            <div class="top-actions"><a class="button outline" href="./index.html">← Về trang chủ</a></div>
+        </div>
+    </header>
+    <main class="login-layout">
+        <section class="login-art"><div><span class="eyebrow">Chào mừng đến với GoMeal</span><h1>Món ngon gần bạn, chỉ cách vài cú chạm.</h1><p>Đăng nhập để đặt món, quản lý đơn hàng hoặc điều hành hoạt động đối tác.</p></div></section>
+        <section class="login-side">
+            <form class="login-form" id="login-form" novalidate>
+                <span class="eyebrow">Tài khoản GoMeal</span><h2 id="form-title">Đăng nhập</h2><p id="form-intro">Nhập email và mật khẩu. Hệ thống tự mở trang theo loại tài khoản của bạn.</p>
+                <div class="field" data-register-only hidden><label for="name">Họ tên</label><input id="name" name="name" autocomplete="name" placeholder="Nguyễn Văn A" disabled></div>
+                <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ban@example.com" required></div>
+                <div class="field" data-register-only hidden><label for="phone">Số điện thoại <span class="muted">(có thể bổ sung sau)</span></label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0912 345 678" aria-describedby="phone-hint" disabled><small class="muted" id="phone-hint">Bắt buộc trước khi đặt đơn đầu tiên.</small></div>
+                <div class="field"><div class="password-row"><label for="password">Mật khẩu</label><a class="text-link" href="#" data-demo-toast="Tính năng khôi phục mật khẩu sẽ được kết nối sau." data-login-only>Quên mật khẩu?</a></div><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" required></div>
+                <div class="field" data-register-only hidden><label for="confirm-password">Nhập lại mật khẩu</label><input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu" disabled></div>
+                <label class="muted" data-login-only style="display:flex;align-items:center;gap:8px;font-size:.82rem"><input type="checkbox" name="remember"> Ghi nhớ đăng nhập trên thiết bị này</label>
+                <p class="form-error" id="form-error" role="alert"></p>
+                <button class="button primary" type="submit" id="submit-button">Đăng nhập</button>
+                <p class="login-note" data-login-only>Bản demo — tài khoản mẫu, mật khẩu <strong>demo123</strong>: khach@gomeal.vn · nhahang@gomeal.vn · taixe@gomeal.vn · admin@gomeal.vn</p>
+                <p style="text-align:center;font-size:.85rem"><span id="auth-switch-label">Chưa có tài khoản?</span> <a class="text-link" href="#" id="auth-mode-toggle">Đăng ký</a></p>
+            </form>
+        </section>
+    </main>
+    <script src="./mock-backend.js"></script>
+    <script src="./api.js"></script>
+    <script src="./app.js"></script>
+    <script src="./login.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đơn của tôi — GoMeal</title>
+    <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+    <header class="topbar"><div class="container topbar-inner">
+        <button class="mobile-menu" type="button" data-nav-toggle aria-label="Mở menu" aria-expanded="false">☰</button>
+        <nav class="main-nav" aria-label="Điều hướng chính"><a href="./index.html">Trang chủ</a><a class="active" href="./orders.html" aria-current="page">Đơn của tôi</a></nav>
+        <div class="top-actions"><span class="user-chip"><span class="avatar" data-user-avatar></span><span data-user-name></span></span><a class="button outline" href="#" data-logout>Đăng xuất</a></div>
+    </div></header>
+    <main class="container section orders-page">
+        <div class="section-heading"><div><span class="eyebrow">Tài khoản của bạn</span><h1>Đơn của tôi</h1><p>Theo dõi đơn đang xử lý và xem lại các đơn đã đặt.</p></div></div>
+        <div class="orders-layout">
+            <section class="panel card" aria-labelledby="history-title">
+                <div class="panel-heading"><h2 id="history-title">Lịch sử đơn</h2><span class="muted" id="history-count" style="font-size:.8rem"></span></div>
+                <div class="order-history" id="history" aria-busy="true"></div>
+                <button class="button outline small" type="button" id="load-more" hidden>Xem thêm đơn cũ</button>
+            </section>
+            <section class="panel card order-detail" id="detail" aria-live="polite" aria-labelledby="detail-title">
+                <p class="empty-state">Chọn một đơn để xem chi tiết.</p>
+            </section>
+        </div>
+        <p class="notice">Trang tự cập nhật trạng thái 4 giây/lần khi đang mở. Bản demo dùng backend giả lập (mock-backend.js).</p>
+    </main>
+    <dialog id="cancel-dialog">
+        <form class="dialog-form" id="cancel-form">
+            <h2>Hủy đơn <span id="cancel-code"></span>?</h2>
+            <p class="muted" style="margin:0;font-size:.88rem">Bạn chỉ tự hủy được khi nhà hàng chưa xác nhận đơn. Đơn đã thanh toán mô phỏng sẽ được hoàn tiền mô phỏng.</p>
+            <div class="field" style="margin:0"><label for="cancel-reason">Lý do (không bắt buộc)</label><input class="control" id="cancel-reason" name="reason" placeholder="Ví dụ: Đặt nhầm món"></div>
+            <p class="form-error" id="cancel-error" role="alert"></p>
+            <div class="dialog-actions"><button class="button outline" type="button" data-dialog-close>Giữ đơn</button><button class="button primary" type="submit">Hủy đơn</button></div>
+        </form>
+    </dialog>
+    <script src="./mock-backend.js"></script>
+    <script src="./api.js"></script>
+    <script src="./app.js"></script>
+    <script src="./orders.js"></script>
+</body>
+</html>

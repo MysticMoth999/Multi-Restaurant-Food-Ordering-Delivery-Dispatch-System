@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản trị hệ thống — GoMeal</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/features.css">
+</head>
+<body>
+    <header class="topbar"><div class="container topbar-inner">
+        <button class="mobile-menu" type="button" data-nav-toggle aria-label="Mở menu" aria-expanded="false">☰</button>
+        <nav class="main-nav" aria-label="Điều hướng chính"><a href="./index.html">Trang chủ</a><a class="active" href="./admin.html">Quản trị</a></nav>
+        <div class="top-actions"><span class="user-chip"><span class="avatar" data-user-avatar></span><span data-user-name></span></span><a class="button outline" href="#" data-logout>Đăng xuất</a></div>
+    </div></header>
+    <div class="workspace">
+        <aside class="sidebar">
+            <div><div class="sidebar-label">Tổng quan</div><nav class="side-links" aria-label="Quản trị"><a class="side-link active" href="#top"><span class="ico">▦</span>Dashboard</a><a class="side-link" href="#orders"><span class="ico">🧾</span>Đơn hàng</a><a class="side-link" href="#restaurants"><span class="ico">🍽️</span>Nhà hàng</a><a class="side-link" href="#drivers"><span class="ico">🛵</span>Tài xế</a><a class="side-link" href="#pricing"><span class="ico">⛽</span>Phí giao &amp; voucher</a></nav></div>
+            <div class="sidebar-user"><span class="avatar" data-user-avatar></span><span><strong data-user-name></strong><small>Quản trị hệ thống</small></span></div>
+        </aside>
+        <main class="workspace-main" id="top">
+            <div class="workspace-heading"><div><h1>Tổng quan hệ thống</h1><p>Theo dõi đơn hàng và quản lý đối tác trên toàn hệ thống.</p></div><div class="heading-actions"><button class="button outline" type="button" id="export-csv">↓ Xuất CSV đơn hàng</button></div></div>
+            <section class="stats-grid" id="stats" aria-label="Chỉ số tổng quan"></section>
+            <div class="dashboard-grid">
+                <section class="panel card" id="orders">
+                    <div class="panel-heading"><h2>Đơn hàng gần đây</h2><span class="muted" style="font-size:.8rem">10 đơn mới nhất</span></div>
+                    <div class="table-wrap"><table class="data-table"><thead><tr><th>MÃ ĐƠN</th><th>KHÁCH HÀNG</th><th>NHÀ HÀNG</th><th>GIÁ TRỊ</th><th>TRẠNG THÁI</th></tr></thead><tbody id="order-rows"></tbody></table></div>
+                </section>
+                <section class="panel card">
+                    <div class="panel-heading"><h2>Hoạt động gần đây</h2></div>
+                    <div class="activity-list" id="activity"></div>
+                    <div style="margin-top:22px"><div class="panel-heading"><h2>Đơn theo trạng thái</h2></div><div class="status-bars" id="status-bars"></div></div>
+                </section>
+            </div>
+            <section class="panel card" id="restaurants" style="margin-top:18px">
+                <div class="panel-heading"><div><h2>Nhà hàng</h2><span class="muted" style="font-size:.8rem">Nhà hàng tạm ngưng không hiện với khách và không nhận đơn mới; đơn đã tạo vẫn tiếp tục xử lý</span></div></div>
+                <div class="table-wrap"><table class="data-table"><thead><tr><th>NHÀ HÀNG</th><th>ĐỊA CHỈ</th><th>TRẠNG THÁI</th><th></th></tr></thead><tbody id="restaurant-rows"></tbody></table></div>
+            </section>
+            <section class="panel card" id="drivers" style="margin-top:18px">
+                <div class="panel-heading"><div><h2>Tài xế</h2><span class="muted" style="font-size:.8rem">Chỉ tài xế trực tuyến (đang gửi vị trí) mới được mời nhận đơn. Không khóa được tài xế đang giao đơn</span></div></div>
+                <div class="table-wrap"><table class="data-table"><thead><tr><th>TÀI XẾ</th><th>TRẠNG THÁI</th><th>VỊ TRÍ</th><th></th></tr></thead><tbody id="driver-rows"></tbody></table></div>
+            </section>
+            <section class="panel card" id="pricing" style="margin-top:18px">
+                <div class="panel-heading"><div><h2>Phí giao hàng</h2><span class="muted" style="font-size:.8rem">Phí theo bậc quãng đường, nhân theo giá xăng hiện tại so với giá tham chiếu. Đơn có giá trị cao được giảm phí.</span></div></div>
+                <div class="pricing-grid">
+                    <div>
+                        <form class="inline-form" id="fuel-form">
+                            <div class="field"><label for="fuel-price">Giá xăng (đ/lít)</label><input class="control" id="fuel-price" name="fuelPrice" type="number" min="10000" max="60000" step="100" required></div>
+                            <button class="button primary small" type="submit">Lưu giá xăng</button>
+                        </form>
+                        <p class="muted" id="fuel-note" style="font-size:.8rem"></p>
+                    </div>
+                    <table class="tier-table"><thead><tr><th>Quãng đường</th><th>Phí giao</th></tr></thead><tbody id="tier-rows"></tbody></table>
+                    <table class="tier-table"><thead><tr><th>Tiền món từ</th><th>Giảm phí giao</th></tr></thead><tbody id="value-rows"></tbody></table>
+                </div>
+            </section>
+            <section class="panel card" id="vouchers" style="margin-top:18px">
+                <div class="panel-heading"><div><h2>Voucher</h2><span class="muted" style="font-size:.8rem">Mỗi khách dùng mỗi voucher một lần; hủy đơn thì voucher được trả lại</span></div></div>
+                <form class="voucher-form" id="voucher-form">
+                    <div class="field"><label for="v-code">Mã</label><input class="control" id="v-code" name="code" required maxlength="32" placeholder="VD: GIAM15" pattern="[A-Za-z0-9_\-]{3,32}"></div>
+                    <div class="field"><label for="v-kind">Loại</label><select class="control" id="v-kind" name="kind"><option value="SHIPPING">Giảm phí giao</option><option value="ORDER">Giảm tiền món</option></select></div>
+                    <div class="field"><label for="v-percent">Giảm % (hoặc để trống)</label><input class="control" id="v-percent" name="percent" type="number" min="1" max="100"></div>
+                    <div class="field"><label for="v-amount">Giảm số tiền (đ)</label><input class="control" id="v-amount" name="amount" type="number" min="1000" step="1000"></div>
+                    <div class="field"><label for="v-max">Giảm tối đa (đ)</label><input class="control" id="v-max" name="maxDiscount" type="number" min="1000" step="1000"></div>
+                    <div class="field"><label for="v-min">Đơn tối thiểu (đ)</label><input class="control" id="v-min" name="minSubtotal" type="number" min="0" step="1000" value="0"></div>
+                    <div class="field"><label for="v-email">Chỉ cho khách (email, tùy chọn)</label><input class="control" id="v-email" name="customerEmail" type="email" placeholder="khach@gomeal.vn"></div>
+                    <div class="field"><label for="v-days">Hết hạn sau (ngày)</label><input class="control" id="v-days" name="expiresInDays" type="number" min="1" max="365" placeholder="Không giới hạn"></div>
+                    <div class="field" style="grid-column:1/-1"><label for="v-desc">Mô tả hiển thị cho khách</label><input class="control" id="v-desc" name="description" maxlength="200" placeholder="VD: Giảm 15% phí giao cho đơn từ 80.000đ"></div>
+                    <div><button class="button primary" type="submit">＋ Tạo voucher</button></div>
+                    <p class="form-error" id="voucher-error" role="alert" style="grid-column:1/-1;margin:0"></p>
+                </form>
+                <div class="table-wrap" style="margin-top:14px"><table class="data-table"><thead><tr><th>MÃ</th><th>ƯU ĐÃI</th><th>ĐIỀU KIỆN</th><th>ĐÃ DÙNG</th><th>TRẠNG THÁI</th><th></th></tr></thead><tbody id="voucher-rows"></tbody></table></div>
+            </section>
+            <p class="notice">Số liệu lấy từ backend M2, lưu trong CSDL MySQL.</p>
+        </main>
+    </div>
+    <script src="./js/api.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/admin.js"></script>
+</body>
+</html>

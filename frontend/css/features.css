@@ -1,0 +1,67 @@
+/* Thành phần dùng chung cho các tính năng: thông báo, bản đồ, gọi nhanh, giảm giá, ảnh món. Dùng biến màu của từng trang. */
+
+/* ---------- Chuông thông báo ---------- */
+.notify { position: relative; display: inline-flex; }
+.notify-bell { position: relative; width: 40px; height: 40px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--card); font-size: 1.05rem; cursor: pointer; }
+.notify-badge { position: absolute; top: -4px; right: -4px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 999px; background: var(--red); color: #fff; font-size: .7rem; font-weight: 800; line-height: 19px; text-align: center; }
+.notify-panel { position: absolute; z-index: 60; top: calc(100% + 8px); right: 0; width: min(360px, calc(100vw - 24px)); max-height: 70vh; overflow: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--ink); box-shadow: 0 16px 40px #14212b33; text-align: left; }
+.notify-head { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--line); background: var(--card); }
+.notify-list { display: grid; }
+.notify-item { display: grid; gap: 2px; padding: 11px 14px; border-bottom: 1px solid var(--line); font-size: .84rem; color: var(--ink); text-decoration: none; }
+.notify-item span { color: var(--mute); }
+.notify-item small { color: var(--mute); font-size: .74rem; }
+.notify-item.unread { background: color-mix(in srgb, var(--yellow) 14%, var(--card)); }
+.notify-item:hover { background: color-mix(in srgb, var(--blue) 8%, var(--card)); }
+.notify-panel .empty-state { padding: 18px; margin: 0; color: var(--mute); font-size: .85rem; }
+.text-button { border: 0; background: none; color: var(--blue); font: inherit; font-size: .78rem; font-weight: 700; cursor: pointer; padding: 0; }
+.header-account [data-bell] { display: inline-flex; }
+
+/* ---------- Bản đồ ---------- */
+.pick-map, .track-map { position: relative; z-index: 0; isolation: isolate; width: 100%; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.pick-map { height: 230px; }
+.track-map { height: 300px; margin-top: 14px; }
+.map-offline { margin: 0; padding: 18px; color: var(--mute); font-size: .85rem; }
+.map-pin { background: none; border: 0; }
+.map-pin span { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; box-shadow: 0 4px 10px #0004; font-size: 18px; line-height: 1; }
+.map-pin.red span { background: #ffe1e6; border: 2px solid var(--red); }
+.map-pin.blue span { background: #e3f0fb; border: 2px solid var(--blue); }
+.map-pin.green span { background: #dff4ea; border: 2px solid #20885b; }
+.leaflet-container { font: inherit; }
+.track-info { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; color: var(--mute); font-size: .82rem; }
+.track-info strong { color: var(--ink); }
+
+/* ---------- Gọi nhanh, thanh toán, giảm giá ---------- */
+.call-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.call-button { text-decoration: none; }
+.discount-rows, .receipt .discount-rows, .sum .discount-rows { display: contents; }
+.discount, .receipt .discount, .sum .discount { color: #176a45; display: flex; justify-content: space-between; gap: 10px; }
+.receipt-line.discount span:last-child, .discount span:last-child { font-weight: 700; }
+.ingredients { margin: 4px 0 0; color: var(--mute); font-size: .78rem; }
+.ok-text { color: #176a45 !important; font-weight: 600; }
+.err-text { color: var(--red) !important; font-weight: 600; }
+
+/* ---------- Hộp đặt hàng (trang thực đơn) ---------- */
+#coD { width: min(560px, 94vw); max-height: 94vh; overflow: auto; }
+.pick-block, .voucher-block { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; }
+.pick-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.voucher-row { display: flex; gap: 8px; }
+.voucher-row input { flex: 1; }
+.voucher-block select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
+.small-btn { padding: 8px 12px !important; font-size: .82rem; white-space: nowrap; cursor: pointer; }
+.hint:empty { display: none; }
+
+/* ---------- Quản lý món: ảnh và thành phần ---------- */
+.image-field { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; }
+.image-preview { width: 96px; height: 96px; border: 1px dashed var(--line); border-radius: 12px; object-fit: cover; background: var(--bg); display: grid; place-items: center; font-size: 2rem; }
+textarea.control { min-height: 74px; resize: vertical; font: inherit; }
+.menu-thumb { width: 42px; height: 42px; border-radius: 9px; object-fit: cover; vertical-align: middle; margin-right: 9px; }
+
+/* ---------- Admin: phí giao và voucher ---------- */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: start; }
+.tier-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.tier-table td, .tier-table th { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.inline-form { display: flex; gap: 8px; align-items: end; flex-wrap: wrap; }
+.inline-form .field { margin: 0; flex: 1; min-width: 140px; }
+.voucher-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 14px; align-items: end; }
+.voucher-form .field { margin: 0; }
+.sim-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: .84rem; font-weight: 600; }

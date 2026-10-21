@@ -1,0 +1,8 @@
+# Mọi máy checkout cùng kiểu xuống dòng LF (migration SQL được kiểm checksum theo nội dung).
+* text=auto eol=lf
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.docx binary
+*.pdf binary

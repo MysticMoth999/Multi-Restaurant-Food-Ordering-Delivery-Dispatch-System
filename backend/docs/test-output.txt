@@ -1,0 +1,39 @@
+
+> nhom7-m2-backend@0.1.0 test
+> node --test --test-concurrency=1 test/*.test.js
+
+✔ Cart HTTP: ownership, CRUD, options, single restaurant and checkout (568.0548ms)
+✔ Dispatch rejects failed conditional reservation and rolls back (660.2191ms)
+✔ Dispatch: driver going online after the retry was scheduled is invited at once (335.3865ms)
+✔ Dispatch: restaurant without valid coordinates is not dispatched (351.6775ms)
+✔ Auth: expired sessions are purged and rejected (406.5672ms)
+✔ Billing: correct VND, options, quantities and snapshots (336.2946ms)
+✔ Billing: canonical options merge equal lines and reject inconsistent aliases (312.5755ms)
+✔ CreateOrder: replay, key conflict, changed price and missing phone (312.1953ms)
+✔ 20 injected CreateOrder failures rollback all business rows (320.0549ms)
+✔ Mock FAILED rolls back; COD still works; refunds and voids (313.946ms)
+✔ Order transitions enforce version, role, ownership and cancellation policy (316.2891ms)
+✔ Dispatch: Haversine, tie-break, decline, expiration, retry and stale location (314.778ms)
+✔ Dispatch: older updated_at wins ties; offline revokes; invalid coordinates rejected (311.1385ms)
+✔ Delivery: COD confirmation, driver release and replay are atomic (340.7707ms)
+✔ Atomic rollback on assignment, cancellation and completion failures (534.2925ms)
+✔ Delivery fee: km tiers, fuel price, order value discount and 10 km limit (336.0766ms)
+✔ Vouchers: discount, single use per customer, returned on cancel, owner and expiry rules (324.2923ms)
+✔ Notifications: order, status, offer, payment confirmation and read state per user (318.9087ms)
+✔ Tracking: driver location and contacts appear only while the order is on the road (323.9171ms)
+✔ Menu image upload: owner only, real image bytes, 2 MB limit, served from /media (482.2342ms)
+✔ HTTP full lifecycle uses authenticated identity and optimistic version (544.1191ms)
+✔ Sensitive API role matrix rejects anonymous and wrong-role calls (496.2968ms)
+✔ Ownership, token expiry, lock revocation, register and safe error envelopes (577.7184ms)
+✔ Catalog/menu/options/admin API support review scenarios (387.8102ms)
+✔ 100 HTTP dispatch rounds: 20 orders, 5 drivers, double accepts and late accepts (8761.5143ms)
+✔ RAM adapter isolates instances and read copies; thrown work rolls back (1.7045ms)
+✔ RAM demo server entry point and demo script work together (810.8043ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20231.6854

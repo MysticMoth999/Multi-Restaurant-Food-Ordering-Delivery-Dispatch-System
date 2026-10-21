@@ -1,0 +1,14 @@
+# Bí mật và cấu hình máy riêng: npm run setup tạo .env từ .env.example
+.env
+# Thư viện cài bằng npm ci (một node_modules ở gốc nhờ npm workspaces)
+node_modules/
+# Ảnh quản lý tải lên khi chạy thử (ảnh mẫu nằm ở backend/public/demo)
+backend/uploads/
+# Dữ liệu/kết quả sinh ra khi chạy
+database/data/
+coverage/
+*.log
+tests/test-results/
+tests/playwright-report/
+# File khóa tạm của Word khi đang mở báo cáo
+~$*

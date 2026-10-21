@@ -1,0 +1,12 @@
+# Người phụ trách duyệt Pull Request theo thư mục (GitHub tự gắn người duyệt).
+# Thay @tai-khoan-mX bằng tài khoản GitHub thật của từng thành viên rồi bỏ dấu # ở đầu dòng.
+# Bật "Require review from Code Owners" trong Settings → Branches để bắt buộc người phụ trách duyệt.
+
+# *              @tai-khoan-nhom-truong
+# /frontend/     @tai-khoan-m1
+# /backend/      @tai-khoan-m2
+# /database/     @tai-khoan-m3
+# /tests/        @tai-khoan-m4
+# /docs/         @tai-khoan-nhom-truong
+# /.github/      @tai-khoan-nhom-truong
+# /scripts/      @tai-khoan-nhom-truong

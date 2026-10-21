@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-21T06:28:45.587Z",
+  "engine": "MySQL 8 InnoDB",
+  "results": [
+    {
+      "file": "seed_demo.sql",
+      "counts": {
+        "restaurants": 2,
+        "menu_items": 3,
+        "orders": 0
+      },
+      "login": true,
+      "pass": true
+    },
+    {
+      "file": "seed_load.sql",
+      "counts": {
+        "restaurants": 100,
+        "menu_items": 2000,
+        "orders": 10000
+      },
+      "login": true,
+      "pass": true
+    }
+  ]
+}

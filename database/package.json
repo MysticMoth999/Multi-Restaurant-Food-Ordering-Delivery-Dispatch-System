@@ -1,0 +1,23 @@
+{
+  "name": "@gomeal/database",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "migrate": "node --env-file-if-exists=../.env scripts/database.js migrate",
+    "seed:demo": "node --env-file-if-exists=../.env scripts/database.js demo",
+    "seed:load": "node --env-file-if-exists=../.env scripts/database.js load",
+    "test": "node --env-file-if-exists=../.env --test --test-concurrency=1 test/*.test.js",
+    "benchmark": "node --env-file-if-exists=../.env scripts/benchmark.js",
+    "upgrade-demo": "node --env-file-if-exists=../.env scripts/upgrade-demo.js",
+    "export-seeds": "node --env-file-if-exists=../.env scripts/export-seeds.js --load",
+    "verify-seeds": "node --env-file-if-exists=../.env scripts/verify-sql-seeds.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.24.6"
+  },
+  "version": "0.1.0",
+  "description": "GoMeal database (M3): schema MySQL 8, migration, adapter mysql2, seed, kiểm thử CSDL và đo NFR"
+}

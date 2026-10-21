@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f8">
+    <title>GoMeal — Đặt món ngon, giao tận nơi</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/features.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container topbar-inner">
+            <div class="top-actions" data-account><a class="button outline" href="./login.html">Đăng nhập</a></div>
+        </div>
+    </header>
+    <main>
+        <section class="container hero-home">
+            <div class="hero-copy">
+                <span class="eyebrow">Ngon mỗi ngày, giao thật nhanh</span>
+                <h1>Món ngon đến tận cửa, niềm vui đến tận nhà.</h1>
+                <p>Khám phá những nhà hàng được yêu thích quanh bạn và đặt món chỉ trong vài thao tác.</p>
+                <form class="hero-search" action="#restaurants" onsubmit="document.querySelector('#restaurants').scrollIntoView({behavior:'smooth'}); return false">
+                    <input id="restaurant-search" type="search" placeholder="⌕  Tìm nhà hàng theo tên" aria-label="Tìm nhà hàng theo tên">
+                    <button class="button primary" type="submit">Tìm món ngon</button>
+                </form>
+            </div>
+        </section>
+        <section class="container section" id="restaurants" aria-labelledby="restaurants-title">
+            <div class="section-heading"><div><span class="eyebrow">Được yêu thích</span><h2 id="restaurants-title">Nhà hàng nổi bật</h2><p>Món ngon chất lượng, sẵn sàng giao đến bạn.</p></div></div>
+            <div class="restaurant-grid" id="restaurant-grid" aria-busy="true"></div>
+            <p id="restaurant-empty" class="empty-state" hidden>Chưa tìm thấy nhà hàng phù hợp. Hãy thử từ khóa khác nhé.</p>
+        </section>
+    </main>
+    <footer class="footer"><div class="container footer-inner"><span>© 2026 GoMeal · Giao món ngon, trao niềm vui.</span><span><a href="./login.html">Đăng nhập</a>　·　<a href="./login.html">Kênh đối tác: nhà hàng, tài xế, quản trị</a></span></div></footer>
+    <script src="./js/api.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+    "name": "gomeal",
+    "version": "1.0.0",
+    "private": true,
+    "description": "GoMeal - Multi-Restaurant Food Ordering & Delivery Dispatch System (M1 giao diện, M2 backend, M3 CSDL, M4 kiểm thử)",
+    "type": "module",
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "workspaces": [
+        "backend",
+        "database"
+    ],
+    "scripts": {
+        "setup": "node scripts/setup.mjs",
+        "start": "node scripts/start.mjs",
+        "start:demo": "node scripts/start.mjs --demo",
+        "simulate": "npm run simulate -w @gomeal/backend --",
+        "test": "node scripts/test.mjs",
+        "test:backend": "npm test -w @gomeal/backend",
+        "test:database": "npm test -w @gomeal/database",
+        "coverage": "npm run test:coverage -w @gomeal/backend",
+        "migrate": "npm run migrate -w @gomeal/database",
+        "benchmark": "npm run benchmark -w @gomeal/database"
+    }
+}

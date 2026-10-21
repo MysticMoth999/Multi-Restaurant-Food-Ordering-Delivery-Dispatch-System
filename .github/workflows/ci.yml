@@ -1,0 +1,59 @@
+# Chạy toàn bộ test mỗi khi mở/cập nhật Pull Request và khi main thay đổi.
+# Dùng MySQL 8 dạng service container; cấu hình CSDL truyền bằng biến môi trường (đè lên .env tạo từ .env.example).
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test backend + database
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=30
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: "3306"
+      DB_USER: gomeal
+      DB_PASSWORD: ci-password
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Ho_Chi_Minh
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Cài thư viện (npm workspaces)
+        run: npm ci
+
+      - name: Kiểm tra cú pháp backend
+        run: npm run check -w @gomeal/backend
+
+      - name: Tạo CSDL, tài khoản, migration, dữ liệu demo
+        run: npm run setup -- --skip-install
+
+      - name: Test backend (RAM, MySQL) và database
+        run: npm test
+
+      - name: Coverage service backend (NFR-04)
+        run: npm run coverage

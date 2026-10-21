@@ -1,0 +1,22 @@
+{
+    "name": "@gomeal/backend",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "description": "GoMeal backend (M2): API đơn hàng, tính tiền, thanh toán mô phỏng, điều phối tài xế, thông báo",
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "scripts": {
+        "start": "node --env-file-if-exists=../.env src/server.js",
+        "demo": "node --env-file-if-exists=../.env scripts/demo.js",
+        "simulate": "node --env-file-if-exists=../.env scripts/simulate.js",
+        "test": "node --test --test-concurrency=1 test/*.test.js",
+        "test:mysql": "node --env-file-if-exists=../.env scripts/test-mysql.js",
+        "test:coverage": "node --test --test-concurrency=1 --experimental-test-coverage --test-coverage-include=src/services/*.js test/*.test.js",
+        "check": "node scripts/check.js"
+    },
+    "dependencies": {
+        "express": "5.1.0"
+    }
+}

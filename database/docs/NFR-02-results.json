@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-21T07:43:29.911Z",
+  "engine": "MySQL 8 InnoDB",
+  "passed": 20,
+  "total": 20,
+  "cases": [
+    {
+      "point": "afterOrder",
+      "method": "COD",
+      "pass": true
+    },
+    {
+      "point": "afterOrder",
+      "method": "MOCK_WALLET",
+      "pass": true
+    },
+    {
+      "point": "afterOrder",
+      "method": "MOCK_CARD",
+      "pass": true
+    },
+    {
+      "point": "afterItem",
+      "method": "COD",
+      "pass": true
+    },
+    {
+      "point": "afterItem",
+      "method": "MOCK_WALLET",
+      "pass": true
+    },
+    {
+      "point": "afterItem",
+      "method": "MOCK_CARD",
+      "pass": true
+    },
+    {
+      "point": "afterHistory",
+      "method": "COD",
+      "pass": true
+    },
+    {
+      "point": "afterHistory",
+      "method": "MOCK_WALLET",
+      "pass": true
+    },
+    {
+      "point": "afterHistory",
+      "method": "MOCK_CARD",
+      "pass": true
+    },
+    {
+      "point": "afterPayment",
+      "method": "COD",
+      "pass": true
+    },
+    {
+      "point": "afterPayment",
+      "method": "MOCK_WALLET",
+      "pass": true
+    },
+    {
+      "point": "afterPayment",
+      "method": "MOCK_CARD",
+      "pass": true
+    },
+    {
+      "point": "beforeCommit",
+      "method": "COD",
+      "pass": true
+    },
+    {
+      "point": "beforeCommit",
+      "method": "MOCK_WALLET",
+      "pass": true
+    },
+    {
+      "point": "beforeCommit",
+      "method": "MOCK_CARD",
+      "pass": true
+    },
+    {
+      "point": "mockFailed",
+      "method": "MOCK_WALLET",
+      "pass": true
+    },
+    {
+      "point": "mockFailed",
+      "method": "MOCK_CARD",
+      "pass": true
+    },
+    {
+      "point": "mockFailed",
+      "method": "MOCK_WALLET",
+      "pass": true
+    },
+    {
+      "point": "mockFailed",
+      "method": "MOCK_CARD",
+      "pass": true
+    },
+    {
+      "point": "mockFailed",
+      "method": "MOCK_WALLET",
+      "pass": true
+    }
+  ]
+}

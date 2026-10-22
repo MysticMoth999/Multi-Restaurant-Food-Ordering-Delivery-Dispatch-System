@@ -1,7 +1,4 @@
 # Nhóm 7 — M2 Backend
-
-Bản M2 của Hưng (Nhóm 7), đưa vào pull request đích M2 theo yêu cầu ngày 22/10/2026. Đây là gói nghiệp vụ dùng RAM để review; bản tích hợp của nhóm nằm trên main.
-
 M2 triển khai Order Lifecycle API, Billing, Mock Payment và Dispatch theo báo cáo của nhóm; kèm auth, phân quyền và API phụ trợ để thử luồng. **Không triển khai database. M3 phụ trách CSDL, schema, migration, truy vấn và adapter lưu trữ thật.**
 
 ## Chạy thử

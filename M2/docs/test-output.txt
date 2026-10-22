@@ -1,0 +1,45 @@
+✔ Cart HTTP: ownership, CRUD, options, single restaurant and checkout (1190.6957ms)
+✔ Dispatch rejects failed conditional reservation and rolls back (1230.8624ms)
+✔ Billing: correct VND, options, quantities and snapshots (555.3695ms)
+✔ Billing: canonical options merge equal lines and reject inconsistent aliases (556.9683ms)
+✔ CreateOrder: replay, key conflict, changed price and missing phone (551.287ms)
+✔ 20 injected CreateOrder failures rollback all business rows (552.1182ms)
+✔ Mock FAILED rolls back; COD still works; refunds and voids (544.6545ms)
+✔ Order transitions enforce version, role, ownership and cancellation policy (548.9318ms)
+✔ Dispatch: Haversine, tie-break, decline, expiration, retry and stale location (629.6353ms)
+✔ Dispatch: older updated_at wins ties; offline revokes; invalid coordinates rejected (551.5588ms)
+✔ Delivery: COD confirmation, driver release and replay are atomic (551.311ms)
+✔ Atomic rollback on assignment, cancellation and completion failures (573.1574ms)
+✔ HTTP full lifecycle uses authenticated identity and optimistic version (1051.9765ms)
+✔ Sensitive API role matrix rejects anonymous and wrong-role calls (1830.7701ms)
+✔ Ownership, token expiry, lock revocation, register and safe error envelopes (1987.4867ms)
+✔ Catalog/menu/options/admin API support review scenarios (943.405ms)
+✔ 100 HTTP dispatch rounds: 20 orders, 5 drivers, double accepts and late accepts (10810.1434ms)
+✔ RAM adapter isolates instances and read copies; thrown work rolls back (6.2045ms)
+✔ RAM demo server entry point and demo script work together (1848.6169ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28946.8393
+ℹ start of coverage report
+ℹ ----------------------------------------------------------------------
+ℹ file                  | line % | branch % | funcs % | uncovered lines
+ℹ ----------------------------------------------------------------------
+ℹ src                   |        |          |         | 
+ℹ  services             |        |          |         | 
+ℹ   admin-service.js    | 100.00 |    92.59 |   89.47 | 
+ℹ   auth-service.js     | 100.00 |    94.44 |  100.00 | 
+ℹ   billing-service.js  | 100.00 |   100.00 |   91.67 | 
+ℹ   cart-service.js     | 100.00 |   100.00 |  100.00 | 
+ℹ   catalog-service.js  |  96.20 |    96.72 |   85.71 | 106-112
+ℹ   dispatch-service.js |  99.15 |    98.15 |   96.15 | 53-54
+ℹ   order-service.js    | 100.00 |   100.00 |   93.33 | 
+ℹ   payment-service.js  |  96.72 |    94.12 |  100.00 | 50-51
+ℹ ----------------------------------------------------------------------
+ℹ all files             |  98.94 |    97.35 |   93.33 | 
+ℹ ----------------------------------------------------------------------
+ℹ end of coverage report

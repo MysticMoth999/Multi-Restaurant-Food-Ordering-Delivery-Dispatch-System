@@ -1,3 +1,5 @@
+> Báo cáo bên dưới là lần audit 18/10/2026. Kết quả mới 22/10: 22/22 test PASS, line coverage service 98,97%, branch 97,45%. Xem KIEM-THU-TINH-DONG-AI.md và ../reports/dynamic-after.txt.
+
 # Kết quả kiểm thử M2 — bản RAM
 
 Ngày chạy: 18/10/2026. Windows, Node.js 24.19.0, Express 5.1.0.

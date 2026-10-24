@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "type": "module",
-    "description": "NhÃ³m 7 M2 review package â€” Order, Billing, Mock Payment and Dispatch",
+    "description": "Group 7 M2 - static and dynamic testing with AI-assisted review",
     "engines": {
         "node": ">=24.0.0 <25"
     },
@@ -12,9 +12,18 @@
         "demo": "node --env-file-if-exists=.env scripts/demo.js",
         "test": "node --test --test-concurrency=1 test/*.test.js",
         "test:coverage": "node --test --test-concurrency=1 --experimental-test-coverage --test-coverage-include=src/services/*.js test/*.test.js",
-        "check": "node scripts/check.js"
+        "check": "node scripts/check.js",
+        "lint": "eslint . --max-warnings 0",
+        "test:regression": "node --test test/ai-regression.test.js",
+        "quality": "node scripts/verify-quality.js"
     },
     "dependencies": {
         "express": "5.1.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "10.0.1",
+        "eslint": "10.13.0",
+        "eslint-plugin-sonarjs": "4.2.2",
+        "globals": "17.13.0"
     }
 }

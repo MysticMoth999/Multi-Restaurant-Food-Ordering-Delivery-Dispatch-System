@@ -1,6 +1,6 @@
-# Nhóm 7 — M2 Backend
+# Nhóm 7 — M2 Backend và kiểm thử có AI hỗ trợ
 
-Bản local để Hưng xem và bàn với nhóm. Không commit hoặc push GitHub.
+Bản M2 của Hưng (Nhóm 7), dùng dữ liệu RAM để review và kiểm thử.
 
 M2 triển khai Order Lifecycle API, Billing, Mock Payment và Dispatch theo báo cáo của nhóm; kèm auth, phân quyền và API phụ trợ để thử luồng. **Không triển khai database. M3 phụ trách CSDL, schema, migration, truy vấn và adapter lưu trữ thật.**
 
@@ -52,3 +52,14 @@ npm run test:coverage
 MemoryStore mô phỏng hoàn tác bằng bản sao bộ nhớ. Test này không chứng minh transaction, khóa, ràng buộc duy nhất hay lưu bền trên CSDL thật. Khi ghép M3 phải kiểm thử lại các điểm đó. Frontend M1 chưa được tích hợp trong ZIP này.
 
 Audit ngày 18/10/2026: xem docs/AUDIT-M2.md. Đã bổ sung CartService/API CRUD giỏ; cập nhật hợp đồng ở docs/API.md.
+
+
+## Bản kiểm thử local ngày 22/10/2026
+
+Chạy `npm ci` rồi `npm run quality`. Lệnh này chạy syntax check, ESLint + SonarJS và toàn bộ test với coverage tối thiểu 70% cho service. Kết quả mới ở reports/quality-summary.json, static-after.json và dynamic-after.txt.
+
+Đọc [báo cáo kiểm thử tĩnh, động và AI](docs/KIEM-THU-TINH-DONG-AI.md). Bản này đã sửa 3 lỗi có test tái hiện; 22/22 test đạt, line coverage service 98,97%. Log trước sửa nằm ở reports/ai-before.txt và static-before.json. Tài liệu audit 18/10 là bằng chứng lịch sử; không thay cho lần chạy mới.
+
+Bản kiểm thử đã được Hưng duyệt để đưa lên nhánh M2 ngày 24/10/2026. Không thay database M3. Không thêm AI vào API sản phẩm; AI hỗ trợ review và sinh test, chạy lại không cần API key.
+
+Phân công: M2 tự kiểm tra và sửa mã nghiệp vụ; bộ test tích hợp là tài liệu hỗ trợ để M4 rà soát/nghiệm thu. Không thay phần CSDL M3.

@@ -15,12 +15,16 @@ export function normalizeItems(items) {
         ensure(item && typeof item === "object", "VALIDATION", "Dòng giỏ không hợp lệ.");
         const menuItemId = integer(item.menuItemId, "menuItemId");
         const quantity = integer(item.quantity, "quantity", 1, 99);
+        for (const field of ["selectedOptionIds", "optionIds"]) {
+            if (item[field] !== undefined) {
+                ensure(
+                    Array.isArray(item[field]) && item[field].length <= 30,
+                    "VALIDATION",
+                    "Danh sách option không hợp lệ."
+                );
+            }
+        }
         const ids = item.selectedOptionIds ?? item.optionIds ?? [];
-        ensure(
-            Array.isArray(ids) && ids.length <= 30,
-            "VALIDATION",
-            "Danh sách option không hợp lệ."
-        );
         const selectedOptionIds = ids.map((id) => integer(id, "optionId")).sort((a, b) => a - b);
         ensure(new Set(ids).size === ids.length, "VALIDATION", "Không chọn trùng option.");
         if (item.selectedOptionIds && item.optionIds) {

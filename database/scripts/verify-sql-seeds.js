@@ -11,7 +11,7 @@ const store=await MysqlStore.open({database});
 const connection=await mysql.createConnection(connectionConfig({database,multipleStatements:true}));
 const results=[];
 try {
-    for(const [file,expected] of [['seed_demo.sql',{restaurants:2,menu_items:3,orders:0}],
+    for(const [file,expected] of [['seed_demo.sql',{restaurants:5,menu_items:26,orders:0}],
         ['seed_load.sql',{restaurants:100,menu_items:2000,orders:10000}]]) {
         await reset(store);
         await connection.query(readFileSync(new URL(`../sql/${file}`,import.meta.url),'utf8'));

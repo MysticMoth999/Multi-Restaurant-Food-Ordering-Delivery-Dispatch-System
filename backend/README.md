@@ -26,6 +26,7 @@ Mật khẩu demo lấy từ DEMO_PASSWORD (mẫu demo12345). Chỉ dùng server
 | chuacosdt@gomeal.vn | Customer chưa có số điện thoại |
 | nhahang@gomeal.vn | Manager nhà hàng 1 |
 | nhahang2@gomeal.vn | Manager nhà hàng 2 |
+| nhahang3@gomeal.vn đến nhahang5@gomeal.vn | Manager nhà hàng 3–5 (Phở Bắc Hà Nội, Napoli Pizza & Pasta, Trà Sữa Mây) |
 | taixe@gomeal.vn, taixe2@gomeal.vn đến taixe5@gomeal.vn | 5 Driver |
 | admin@gomeal.vn | Admin |
 
@@ -64,6 +65,6 @@ Audit ngày 18/10/2026 và 21/10/2026: xem docs/AUDIT-M2.md. Đã bổ sung Cart
 - **Voucher:** admin tạo/bật/tắt; khách chọn khi đặt; mỗi khách dùng một lần, hủy đơn được trả lại. Voucher mẫu: FREESHIP, GIAM20, KHACHMOI (riêng khach@gomeal.vn).
 - **Thông báo:** chuông 🔔 trên mọi trang; đặt đơn, xác nhận đã thanh toán, từng bước trạng thái, lời mời tài xế, hủy đơn.
 - **Gọi nhanh:** nút gọi nhà hàng/tài xế/khách trên trang đơn, tài xế và quản lý.
-- **Theo dõi vị trí:** bản đồ OpenStreetMap (cần Internet) cho khách và tài xế; tài xế đang giao gửi vị trí 5 giây/lần, có chế độ "Mô phỏng di chuyển".
+- **Theo dõi vị trí:** bản đồ vẽ đường đi theo đường phố (Google Maps khi có `GOOGLE_MAPS_API_KEY`, không thì OpenStreetMap + OSRM; cần Internet) cho khách và tài xế; `GET /api/config` cho giao diện biết dùng loại nào; tài xế đang giao gửi vị trí 5 giây/lần, có chế độ "Mô phỏng di chuyển".
 - **Ảnh và thành phần món:** quản lý tải ảnh (JPG/PNG/WEBP ≤ 2 MB, lưu ở `uploads/`, không commit) và nhập thành phần; ảnh mẫu ở `public/demo`.
-- **Mô phỏng vận hành:** khi server đang chạy, mở terminal khác chạy `npm run simulate -- --orders 4 --every 15`. Khách khach@gomeal.vn đặt đơn, hai nhà hàng tự xác nhận, taixe2–taixe5 tự nhận và chạy trên bản đồ; taixe@gomeal.vn để bạn tự thao tác.
+- **Mô phỏng vận hành:** khi server đang chạy, mở terminal khác chạy `npm run simulate -- --orders 4 --every 15`. Khách khach@gomeal.vn đặt đơn, các nhà hàng tự xác nhận, taixe2–taixe5 tự nhận và chạy trên bản đồ; taixe@gomeal.vn để bạn tự thao tác.

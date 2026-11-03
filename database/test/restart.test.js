@@ -5,6 +5,8 @@ import { createServer } from 'node:net';
 import { fileURLToPath,pathToFileURL } from 'node:url';
 import {MysqlStore} from '../src/mysql-store.js';
 import {testDatabase,reset} from './support.js';
+import {MemoryStore} from '@gomeal/backend/src/adapters/memory-store.js';
+import {seedData} from '@gomeal/backend/scripts/demo-fixtures.js';
 
 test('actual HTTP server restart preserves orders, carts, session, snapshots; process death rolls back uncommitted writes', {timeout:30000}, async (t)=>{
     const clean=await MysqlStore.open({database:testDatabase});await reset(clean);await clean.close();
@@ -69,7 +71,8 @@ test('actual HTTP server restart preserves orders, carts, session, snapshots; pr
     try {
         assert.notEqual((await store.user(1)).name,'uncommitted');
         assert.equal((await store.rows('orders')).length,1);
-        assert.equal((await store.rows('users')).length,11);
+        // Chỉ còn đúng các tài khoản demo: tài khoản ghi dở khi tiến trình chết đã bị hoàn tác.
+        assert.equal((await store.rows('users')).length,(await seedData(new MemoryStore(),'unused')).length);
         assert.equal((await store.query('SELECT count(*) n FROM order_items i LEFT JOIN orders o ON o.id=i.order_id WHERE o.id IS NULL'))[0].n,0);
         assert.equal((await store.pool.query('CHECK TABLE orders'))[0][0].Msg_text,'OK');
     } finally {await store.close();}

@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-21T06:28:45.587Z",
+  "date": "2026-11-03T05:04:41.486Z",
   "engine": "MySQL 8 InnoDB",
   "results": [
     {
       "file": "seed_demo.sql",
       "counts": {
-        "restaurants": 2,
-        "menu_items": 3,
+        "restaurants": 5,
+        "menu_items": 26,
         "orders": 0
       },
       "login": true,

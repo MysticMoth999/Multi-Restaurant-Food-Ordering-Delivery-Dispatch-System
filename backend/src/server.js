@@ -24,7 +24,11 @@ await system.store.transaction(async () => {
 // Giao diện (thư mục frontend/ cạnh backend/ trong repo); UI_DIR đổi được, UI_DIR=none để tắt.
 const uiDir = process.env.UI_DIR ?? fileURLToPath(new URL("../../frontend/", import.meta.url));
 const serveUi = uiDir !== "none" && existsSync(uiDir);
-const app = createApp(system, { corsOrigin: process.env.CORS_ORIGIN, uiDir: serveUi ? uiDir : undefined });
+const app = createApp(system, {
+    corsOrigin: process.env.CORS_ORIGIN,
+    uiDir: serveUi ? uiDir : undefined,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY?.trim() || undefined,
+});
 const server = app.listen(port, process.env.HOST ?? "127.0.0.1", (error) => {
     // Express 5 gọi callback cả khi lỗi (ví dụ cổng đã bị chiếm); báo rõ rồi thoát.
     if (error) {

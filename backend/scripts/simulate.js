@@ -1,5 +1,5 @@
 // Mô phỏng vận hành qua HTTP trên server đang chạy (npm start): khách đặt đơn, nhà hàng xác nhận,
-// tài xế nhận lời mời và di chuyển trên bản đồ tới nhà hàng rồi tới điểm giao.
+// tài xế nhận lời mời và chạy theo đường phố (OSRM, giống bản đồ) tới nhà hàng rồi tới điểm giao.
 // Dùng: npm run simulate -- --orders 4 --every 15 --customer khach@gomeal.vn
 // Mặc định để taixe@gomeal.vn cho người dùng tự thao tác; mô phỏng dùng taixe2..taixe5.
 const args = Object.fromEntries(process.argv.slice(2).reduce((pairs, value, i, all) => (value.startsWith("--") ? [...pairs, [value.slice(2), all[i + 1]]] : pairs), []));
@@ -27,6 +27,34 @@ const around = (center, minKm, maxKm) => {
         lng: +(center.lng + (d * Math.sin(angle) * 180) / Math.PI / Math.cos((center.lat * Math.PI) / 180)).toFixed(6),
     };
 };
+
+// Đường đi theo đường phố từ OSRM; không có mạng hoặc OSRM lỗi thì đi thẳng.
+async function roadPath(from, to) {
+    try {
+        const url = `https://router.project-osrm.org/route/v1/driving/${from.lng},${from.lat};${to.lng},${to.lat}?overview=full&geometries=geojson`;
+        const response = await fetch(url, { signal: AbortSignal.timeout(8000) });
+        const route = response.ok ? (await response.json()).routes?.[0] : null;
+        if (route) return [from, ...route.geometry.coordinates.map(([lng, lat]) => ({ lat, lng })), to];
+    } catch {
+        // đi thẳng
+    }
+    return [from, to];
+}
+// Tiến dist km dọc theo path; phần tử đầu của kết quả là vị trí mới, phần sau là đường còn lại.
+function advance(path, dist) {
+    let [here, ...rest] = path;
+    while (rest.length) {
+        const seg = km(here, rest[0]);
+        if (dist < seg) {
+            const f = dist / seg;
+            here = { lat: +(here.lat + (rest[0].lat - here.lat) * f).toFixed(6), lng: +(here.lng + (rest[0].lng - here.lng) * f).toFixed(6) };
+            return [here, ...rest];
+        }
+        dist -= seg;
+        here = rest.shift();
+    }
+    return [here];
+}
 
 async function call(method, path, body, token) {
     const response = await fetch(BASE + path, {
@@ -106,10 +134,15 @@ async function driverLoop(email, start) {
             } else if (board.active) {
                 const order = board.active;
                 const target = order.status === "DRIVER_ASSIGNED" ? order.restaurant : order.deliveryLocation;
-                const left = km(me.position, target);
-                if (left > 0.03) {
-                    const f = Math.min(1, STEP_KM / left);
-                    me.position = { lat: +(me.position.lat + (target.lat - me.position.lat) * f).toFixed(6), lng: +(me.position.lng + (target.lng - me.position.lng) * f).toFixed(6) };
+                // Mỗi chặng (tới nhà hàng, tới điểm giao) tìm đường một lần rồi chạy dần theo đường đó.
+                const leg = `${order.id}:${order.status === "DRIVER_ASSIGNED" ? "restaurant" : "delivery"}`;
+                if (me.leg !== leg) {
+                    me.leg = leg;
+                    me.path = await roadPath(me.position, target);
+                }
+                if (me.path.length > 1) {
+                    me.path = advance(me.path, STEP_KM);
+                    me.position = { lat: +me.path[0].lat.toFixed(6), lng: +me.path[0].lng.toFixed(6) };
                     await call("PUT", "/driver/location", me.position, token);
                 } else {
                     const next = { DRIVER_ASSIGNED: "PICKED_UP", PICKED_UP: "DELIVERING", DELIVERING: "DELIVERED" }[order.status];
@@ -161,7 +194,7 @@ const restaurants = (await call("GET", "/restaurants")).items;
 log(`Bắt đầu mô phỏng: ${ORDERS} đơn, ${DRIVERS.length} tài xế, khách ${CUSTOMER}. Bấm Ctrl+C để dừng.`);
 log(`Mở http://127.0.0.1:5500/orders.html bằng tài khoản ${CUSTOMER} để xem bản đồ theo dõi đơn.`);
 DRIVERS.forEach((email, i) => driverLoop(email, around(restaurants[i % restaurants.length], 0.5, 2)).catch((error) => log(`⚠️  ${email}: ${error.message}`)));
-for (const email of ["nhahang@gomeal.vn", "nhahang2@gomeal.vn"]) managerLoop(email).catch((error) => log(`⚠️  ${email}: ${error.message}`));
+for (const email of ["nhahang@gomeal.vn", "nhahang2@gomeal.vn", "nhahang3@gomeal.vn", "nhahang4@gomeal.vn", "nhahang5@gomeal.vn"]) managerLoop(email).catch((error) => log(`⚠️  ${email}: ${error.message}`));
 await sleep(3000);
 customerLoop(restaurants).catch((error) => log(`⚠️  khách: ${error.message}`));
 await finished();

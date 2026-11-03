@@ -24,7 +24,7 @@ Viết tắt file test: **core** = `backend/test/core.test.js`, **http** = `back
 | FR-14 | Quản trị: nhà hàng, tài xế, giá xăng, voucher | `admin.html`, `js/admin.js` | `services/admin-service.js` | restaurants, drivers, activity, settings, vouchers | http: Catalog/menu/options/admin…; feat: Delivery fee (giá xăng), Vouchers | TC-09 |
 | FR-15 | Thông báo, xác nhận đã thanh toán, gọi nhanh | `js/app.js` (chuông), nút gọi ở `orders.js`, `driver.js`, `restaurant.js` | `services/notification-service.js`, route `/api/notifications` | notifications | feat: Notifications… | TC-11 |
 | FR-16 | Voucher | `js/menu.js`, `js/admin.js` | `services/billing-service.js` (usableVoucher), `admin-service.js` | vouchers, voucher_redemptions (UNIQUE voucher + khách) | feat: Vouchers… | TC-10 |
-| FR-17 | Theo dõi vị trí tài xế trên bản đồ | `js/map.js`, `js/orders.js`, `js/driver.js` | `adapters/order-view.js` (driverLocation), `dispatch-service.js` (updateLocation) | drivers (lat, lng, location_at), orders (delivery_lat, delivery_lng) | feat: Tracking… | TC-12 |
+| FR-17 | Theo dõi vị trí tài xế trên bản đồ, đường đi theo đường phố | `js/map.js`, `js/orders.js`, `js/driver.js` | `adapters/order-view.js` (driverLocation), `dispatch-service.js` (updateLocation), `GET /api/config` | drivers (lat, lng, location_at), orders (delivery_lat, delivery_lng) | feat: Tracking…, Map config… | TC-12 |
 
 ## Yêu cầu phi chức năng
 

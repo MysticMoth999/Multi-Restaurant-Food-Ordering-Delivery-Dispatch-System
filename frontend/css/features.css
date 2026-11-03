@@ -26,6 +26,7 @@
 .map-pin.red span { background: #ffe1e6; border: 2px solid var(--red); }
 .map-pin.blue span { background: #e3f0fb; border: 2px solid var(--blue); }
 .map-pin.green span { background: #dff4ea; border: 2px solid #20885b; }
+.map-pin.gm { transform: translateY(50%); } /* Google neo marker ở cạnh dưới; dời xuống để tâm biểu tượng đúng tọa độ */
 .leaflet-container { font: inherit; }
 .track-info { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; color: var(--mute); font-size: .82rem; }
 .track-info strong { color: var(--ink); }

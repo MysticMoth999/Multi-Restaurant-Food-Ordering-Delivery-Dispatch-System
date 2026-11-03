@@ -65,7 +65,7 @@
         }
         $("#restaurantCuisine").textContent = r.cuisine;
         $("#restaurantAddress").textContent = r.address;
-        $("#restaurantCover").src = "./" + (r.cover || App.FALLBACK_COVER);
+        $("#restaurantCover").src = "./" + App.coverOf(r);
         if (r.logo) $("#restaurantLogo").src = "./" + r.logo;
         else $("#restaurantLogo").hidden = true;
     }
@@ -258,7 +258,9 @@
             : "Tài khoản chưa có số điện thoại. Cần nhập để đặt đơn; số này sẽ được lưu vào tài khoản.";
         $("#coD").showModal();
         // Bản đồ chỉ đo được kích thước khi hộp thoại đã mở.
-        if (!S.picker) S.picker = App.pickerMap($("#pickMap"), S.loc, S.menu.restaurant, pickLocation);
+        if (!S.picker) S.picker = App.pickerMap($("#pickMap"), S.loc, S.menu.restaurant, pickLocation, {
+            onRoute: r => { $("#pickRoute").textContent = "🛵 Đường đi từ nhà hàng: " + App.routeText(r); }
+        });
         else S.picker.refresh();
         ($("#addr").value ? $("#coSubmit") : $("#addr")).focus();
     }

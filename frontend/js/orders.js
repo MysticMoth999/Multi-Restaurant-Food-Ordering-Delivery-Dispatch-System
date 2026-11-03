@@ -8,7 +8,13 @@
     const S = { orders: [], page: 1, total: 0, selectedId: Number(new URLSearchParams(location.search).get("id")) || null, detail: null, mapFor: null };
     // Bản đồ giữ nguyên qua các lần vẽ lại chi tiết đơn (4 giây/lần), chỉ cập nhật vị trí các điểm.
     const mapEl = Object.assign(document.createElement("div"), { className: "track-map" });
-    const track = App.trackingMap(mapEl);
+    // Tìm được đường đi thì cập nhật ngay dòng "còn bao xa" mà không chờ lần tải lại kế tiếp.
+    const track = App.trackingMap(mapEl, {
+        onRoute() {
+            const info = document.querySelector("#detail .track-info");
+            if (info && S.detail) info.innerHTML = trackingInfo(S.detail);
+        }
+    });
     const ACTIVE = new Set(["PENDING", "CONFIRMED", "PREPARING", "READY_FOR_PICKUP", "DRIVER_ASSIGNED", "PICKED_UP", "DELIVERING"]);
 
     const dateTime = ts => {
@@ -51,8 +57,10 @@
         if (!o.driverLocation) return o.status === "READY_FOR_PICKUP" ? "Đang tìm tài xế gần nhà hàng nhất…" : "Vị trí tài xế hiện khi có tài xế nhận đơn.";
         const toRestaurant = o.status === "DRIVER_ASSIGNED";
         const target = toRestaurant ? o.restaurant : o.deliveryLocation;
-        const km = target ? App.distanceKm(o.driverLocation, target) : null;
-        return `<span>🛵 <strong>${App.esc(o.driverName || "Tài xế")}</strong> ${toRestaurant ? "đang đến nhà hàng" : "đang đến chỗ bạn"}${km != null ? `, còn khoảng <strong>${App.km(km)}</strong>` : ""}</span><span>Cập nhật ${App.timeAgo(o.driverLocation.at)}</span>`;
+        // Quãng đường còn lại theo đường đi trên bản đồ; chưa tìm xong đường thì tạm hiện khoảng cách thẳng.
+        const route = track.route();
+        const left = route ? App.routeText(route) : target ? App.km(App.distanceKm(o.driverLocation, target)) + " (đường thẳng)" : null;
+        return `<span>🛵 <strong>${App.esc(o.driverName || "Tài xế")}</strong> ${toRestaurant ? "đang đến nhà hàng" : "đang đến chỗ bạn"}${left ? `, còn khoảng <strong>${left}</strong>` : ""}</span><span>Cập nhật ${App.timeAgo(o.driverLocation.at)}</span>`;
     }
 
     function renderMap(o) {

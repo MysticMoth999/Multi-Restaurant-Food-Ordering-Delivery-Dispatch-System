@@ -16,7 +16,7 @@
     let busy = false;
     let codConfirmedFor = null; // giữ dấu tích COD khi trang tự tải lại
     let lastSent = 0;
-    const track = App.trackingMap($("#driver-map"));
+    const track = App.trackingMap($("#driver-map"), { onRoute: () => board && renderTrackInfo() });
     let mapFor = null;
     const SIM_STEP_KM = 0.15; // mỗi 5 giây khi mô phỏng (~110 km/h, cho demo nhanh)
 
@@ -55,9 +55,19 @@
         const toDelivery = board.active && targetOf(board.active) === board.active.deliveryLocation;
         track.update({ restaurant: o.restaurant, delivery: o.deliveryLocation, driver: me }, toDelivery ? "delivery" : "restaurant");
         track.refresh();
+        renderTrackInfo();
+    }
+    // Quãng đường còn lại theo đường đi (bản đồ trả về khi tìm xong đường), kèm nút mở chỉ đường trên Google Maps.
+    function renderTrackInfo() {
+        const o = board.active || board.offer;
+        if (!o) return;
+        const me = board.driver.lat != null ? { lat: board.driver.lat, lng: board.driver.lng } : null;
         const target = targetOf(o);
+        const toDelivery = board.active && target === board.active.deliveryLocation;
+        const route = track.route();
+        const left = route ? App.routeText(route) : me && target ? App.km(App.distanceKm(me, target)) + " (đường thẳng)" : "";
         $("#driver-track-info").innerHTML = me && target
-            ? `<span>Còn khoảng <strong>${App.km(App.distanceKm(me, target))}</strong> tới ${toDelivery ? "điểm giao" : "nhà hàng"}</span><span>Vị trí gửi ${App.timeAgo(board.driver.locationAt)}</span>`
+            ? `<span>Còn khoảng <strong>${left}</strong> tới ${toDelivery ? "điểm giao" : "nhà hàng"}</span><span>Vị trí gửi ${App.timeAgo(board.driver.locationAt)}</span><a class="button outline small" href="${App.directionsUrl(me, target)}" target="_blank" rel="noopener">🧭 Chỉ đường trên Google Maps</a>`
             : "<span>Chưa có vị trí của bạn.</span>";
     }
     // Đồng hồ lời mời chỉ để tài xế biết; còn hạn hay không do backend quyết định khi bấm.
@@ -167,13 +177,16 @@
         document.querySelectorAll("[data-countdown]").forEach(el => { el.textContent = remaining(+el.dataset.countdown); });
     }, 1000);
 
-    // Mô phỏng: từ vị trí hiện tại tiến một đoạn về phía nhà hàng/điểm giao của đơn đang giao.
+    // Mô phỏng: từ vị trí hiện tại chạy một đoạn dọc theo đường đi tới nhà hàng/điểm giao của đơn đang giao.
+    // Bản đồ chưa có đường (đang tìm hoặc dịch vụ chỉ đường lỗi) thì tạm tiến thẳng về phía nơi đến.
     const simulatedStep = () => {
         const a = board.active, target = a && targetOf(a);
         if (!target || board.driver.lat == null) return null;
         const me = { lat: board.driver.lat, lng: board.driver.lng };
         const km = App.distanceKm(me, target);
         if (km <= SIM_STEP_KM) return { lat: target.lat, lng: target.lng };
+        const onRoad = track.along(SIM_STEP_KM);
+        if (onRoad) return onRoad;
         const f = SIM_STEP_KM / km;
         return { lat: +(me.lat + (target.lat - me.lat) * f).toFixed(6), lng: +(me.lng + (target.lng - me.lng) * f).toFixed(6) };
     };

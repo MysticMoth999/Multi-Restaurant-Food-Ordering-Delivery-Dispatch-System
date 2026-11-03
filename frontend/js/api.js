@@ -86,6 +86,7 @@
         // Đường dẫn ảnh backend trả về dạng /media/...; ghép với địa chỉ backend để hiển thị.
         media: url => (url ? API_ORIGIN + url : null),
         pricing: () => get("/pricing"),
+        config: () => get("/config"),
         vouchers: () => get("/vouchers/mine").then(d => d.items),
         notifications: {
             list: (after = 0) => get("/notifications?after=" + after),

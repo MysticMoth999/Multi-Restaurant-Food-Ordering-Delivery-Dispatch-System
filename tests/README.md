@@ -2,7 +2,7 @@
 
 M4 phụ trách nghiệm thu độc lập theo mục 9 (NFR) và mục 13 (ca kiểm thử) của báo cáo: integration test API, Playwright E2E cho 4 vai trò, đo NFR còn thiếu, theo dõi lỗi và báo cáo kết quả. Test của M2 (27 ca) và M3 (8 ca) là test của người viết code; M4 kiểm lại từ bên ngoài, qua HTTP và giao diện, trên bản ghép cuối.
 
-Đã có sẵn để dùng lại: `docs/HUONG-DAN-CHAY.md` (mở hệ thống), `docs/TRUY-VET.md` (yêu cầu → code → test), `backend/docs/API.md` (42 endpoint), `database/docs/M4-HANDOFF.md` và `TEST-RESULTS.md` (kết quả đo của M3), script `npm run benchmark` (NFR-01) và `npm run simulate` (mô phỏng vận hành).
+Đã có sẵn để dùng lại: `docs/HUONG-DAN-CHAY.md` (mở hệ thống), `docs/TRUY-VET.md` (yêu cầu → code → test), `backend/docs/API.md` (42 endpoint), `database/docs/TEST-RESULTS.md` (kết quả đo của M3), script `npm run benchmark` (NFR-01) và `npm run simulate` (mô phỏng vận hành).
 
 ## 1. Chuẩn bị môi trường
 

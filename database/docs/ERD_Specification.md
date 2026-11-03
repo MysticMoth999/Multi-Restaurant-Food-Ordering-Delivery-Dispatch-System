@@ -1,6 +1,6 @@
 # Thiết kế CSDL GoMeal cho M3
 
-CSDL triển khai bằng MySQL 8 (InnoDB), adapter bất đồng bộ `mysql2/promise` trên Node.js >=24. Đã chuyển service/controller M2, fixture và test sang async/await cùng lúc theo M3-TASKS.md. Server M2 dùng schema MySQL qua cấu hình DB_NAME; MemoryStore tiếp tục làm test double. Đặc tả này đối chiếu `backend/docs/M3-CONTRACT.md`, báo cáo mục 7.4, 8.2, 9, 14.7 và các record thực tế của service/fixture M2.
+CSDL triển khai bằng MySQL 8 (InnoDB), adapter bất đồng bộ `mysql2/promise` trên Node.js >=24. Đã chuyển service/controller M2, fixture và test sang async/await cùng lúc. Server M2 dùng schema MySQL qua cấu hình DB_NAME; MemoryStore tiếp tục làm test double. Đặc tả này đối chiếu `backend/docs/M3-CONTRACT.md`, báo cáo mục 7.4, 8.2, 9, 14.7 và các record thực tế của service/fixture M2.
 
 ## Quan hệ thực thể
 
@@ -140,7 +140,7 @@ Migration dùng GET_LOCK theo tên database để ngăn hai server cùng áp DDL
 
 FR-02: restaurants.location POINT NOT NULL SRID 4326 có SPATIAL INDEX. WKT POINT dùng vĩ độ trước, kinh độ sau theo trục mặc định EPSG 4326; -180 được chuẩn hóa thành 180 khi tạo geometry. Trigger duy trì location cùng lat/lng; test đọc ST_Latitude/ST_Longitude để tránh đảo trục.
 
-restaurantPage lấy hộp bao quanh vòng 5 km bằng MBRIntersects, sau đó dùng ST_Distance_Sphere với bán kính Trái Đất 6371000 m để khớp Haversine M2, lọc distance<=5 km và sắp distance/id, LIMIT 20. Nếu hộp chạm cực hoặc đường đổi ngày, dùng khoảng lat an toàn rồi lọc khoảng cách chính xác. Collation utf8mb4_0900_ai_ci hỗ trợ tìm tên không phân biệt hoa thường và dấu; đây là hành vi MySQL đã chốt trong M3-TASKS.md.
+restaurantPage lấy hộp bao quanh vòng 5 km bằng MBRIntersects, sau đó dùng ST_Distance_Sphere với bán kính Trái Đất 6371000 m để khớp Haversine M2, lọc distance<=5 km và sắp distance/id, LIMIT 20. Nếu hộp chạm cực hoặc đường đổi ngày, dùng khoảng lat an toàn rồi lọc khoảng cách chính xác. Collation utf8mb4_0900_ai_ci hỗ trợ tìm tên không phân biệt hoa thường và dấu; đây là hành vi MySQL đã chốt.
 
 Mục 7.4: nearestDriver dùng index (status,locked,location_at), loại vị trí cũ quá 120 giây hoặc ở tương lai, tài xế có offer PENDING và cặp đã skip bằng NOT EXISTS/index. Sau đó tính ST_Distance_Sphere và sắp distanceKm, updated_at cũ hơn, id nhỏ hơn. Không áp giới hạn 5 km của nhà hàng cho bài toán tài xế. Không spatial-index cột tài xế nullable; khi mở rộng lớn hơn có thể tách bảng vị trí tài xế online.
 

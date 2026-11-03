@@ -55,7 +55,6 @@ Benchmark dùng gomeal_m3_load và kiểm đúng lượng dữ liệu. API MySQL
 - src/mysql-store.js: pool, transaction/CAS, migration và truy vấn chuyên biệt.
 - database/docs/UI-DATA-DECISIONS.md: quyết định giữ MVP của người dùng.
 - database/docs/TEST-RESULTS.md: kết quả thực đo và giới hạn.
-- database/docs/M4-HANDOFF.md: kiểm lại sau tích hợp M4 và vận hành.
 
 ## Bổ sung 21/10/2026: migration 002
 

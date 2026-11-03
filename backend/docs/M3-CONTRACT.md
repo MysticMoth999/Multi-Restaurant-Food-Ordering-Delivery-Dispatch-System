@@ -1,6 +1,6 @@
 # Hợp đồng M2 ↔ M3 sau tích hợp MySQL 8
 
-**Cập nhật 21/10/2026: nhóm chốt MySQL 8 (InnoDB).** Adapter `database/src/mysql-store.js` dùng `mysql2` (bất đồng bộ); service của M2 đã gọi store bằng `await`. Trạng thái việc của M3 ở `database/docs/M3-TASKS.md`.
+**Cập nhật 21/10/2026: nhóm chốt MySQL 8 (InnoDB).** Adapter `database/src/mysql-store.js` dùng `mysql2` (bất đồng bộ); service của M2 đã gọi store bằng `await`.
 
 M2 cần đọc/ghi dữ liệu để chạy nghiệp vụ. File này mô tả giao tiếp; không quyết định bảng, cột, khóa hay công nghệ CSDL của M3. MemoryStore chỉ là test double dùng RAM.
 

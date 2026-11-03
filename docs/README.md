@@ -22,5 +22,5 @@
 | Phần | Tài liệu |
 |---|---|
 | Backend (M2) | [API.md](../backend/docs/API.md) (hợp đồng API), [REQUIREMENTS.md](../backend/docs/REQUIREMENTS.md) (đối chiếu FR/NFR), [M3-CONTRACT.md](../backend/docs/M3-CONTRACT.md) (hợp đồng dữ liệu với CSDL), [AUDIT-M2.md](../backend/docs/AUDIT-M2.md) |
-| CSDL (M3) | [ERD_Specification.md](../database/docs/ERD_Specification.md) (ERD, từ điển dữ liệu, ràng buộc, index), [M4-HANDOFF.md](../database/docs/M4-HANDOFF.md), [UI-DATA-DECISIONS.md](../database/docs/UI-DATA-DECISIONS.md) |
+| CSDL (M3) | [ERD_Specification.md](../database/docs/ERD_Specification.md) (ERD, từ điển dữ liệu, ràng buộc, index), [UI-DATA-DECISIONS.md](../database/docs/UI-DATA-DECISIONS.md) |
 | Giao diện (M1) | Mục 16 của báo cáo; mã ở [../frontend/](../frontend/) |

@@ -277,7 +277,7 @@ export function createApp(system, options = {}) {
     error: "API không tồn tại.",
     requestId: req.requestId
   }));
-  app.use((error, req, res, next) => {
+  app.use((error, req, res, _next) => {
     let status = 500;
     let code = "INTERNAL";
     let message = "Lỗi hệ thống; hãy thử lại.";

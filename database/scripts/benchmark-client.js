@@ -20,7 +20,7 @@ process.once('message',async ({base,clients,database,backend}) => {
         while (performance.now()<end) {
             const [key,path]=routes[n++%routes.length];
             const before=performance.now(), measured=before>=measureStart;
-            let failed=false;
+            let failed;
             try {
                 const response=await fetch(base+path,{headers:{Authorization:`Bearer ${client.token}`},signal:AbortSignal.timeout(10000)});
                 const body=await response.json();

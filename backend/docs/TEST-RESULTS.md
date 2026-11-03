@@ -1,5 +1,7 @@
 # Kết quả kiểm thử M2
 
+**Chạy lại 03/11/2026 sau khi đưa bản kiểm thử tĩnh/động có AI (nhánh `M2`) vào `main`:** `npm test` 30/30 PASS (thêm 3 test hồi quy `test/ai-regression.test.js`); `npm run lint` (ESLint + SonarJS, cả repo) 0 lỗi; `npm run quality` PASS, line coverage service 96,79%, nhánh 94,43%. Chi tiết: [KIEM-THU-TINH-DONG-AI.md](KIEM-THU-TINH-DONG-AI.md), kết quả máy ở `reports/`.
+
 **Chạy lại 21/10/2026 sau khi thêm phí giao theo km, voucher, thông báo, theo dõi vị trí và ảnh món:** `npm test` 27/27 PASS; `npm run test:mysql` 27/27 PASS; M3 `npm test` 8/8 PASS. Coverage các service: 96,76% dòng, 94,29% nhánh. 5 test mới ở `test/features.test.js`: bậc phí theo km + giá xăng + giảm theo giá trị đơn + giới hạn 10 km; voucher (giảm, mỗi khách một lần, hủy đơn trả voucher, voucher riêng khách, hết hạn, tắt); thông báo theo từng người nhận và trạng thái đã đọc; vị trí tài xế chỉ hiện khi đơn đang trên đường; tải ảnh món (đúng chủ, kiểm byte đầu file, giới hạn 2 MB, phục vụ qua /media, xóa ảnh cũ).
 
 **Chạy lại 21/10/2026 sau khi ghép MySQL của M3:** `npm test` (MemoryStore) 22/22 PASS; `npm run test:mysql` (schema gomeal_m2_test) 22/22 PASS; M3 `npm test` 8/8 PASS. Kết quả đo NFR trên MySQL xem database/docs/TEST-RESULTS.md. Phần dưới là kết quả bản RAM trước khi ghép.

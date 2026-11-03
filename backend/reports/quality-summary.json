@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-11-03T04:44:50.594Z",
+  "environment": {
+    "node": "v25.1.0",
+    "platform": "win32",
+    "release": "10.0.26300",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",
+    "memoryGiB": 16
+  },
+  "scope": "M2 backend; memory adapter; no database or browser UI test",
+  "results": [
+    {
+      "name": "syntax",
+      "exitCode": 0,
+      "durationMs": 1457,
+      "passed": true
+    },
+    {
+      "name": "static",
+      "exitCode": 0,
+      "durationMs": 3785,
+      "passed": true
+    },
+    {
+      "name": "dynamic",
+      "exitCode": 0,
+      "durationMs": 21918,
+      "passed": true
+    }
+  ]
+}

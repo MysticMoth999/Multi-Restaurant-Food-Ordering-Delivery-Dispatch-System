@@ -17,10 +17,17 @@
         "start:demo": "node scripts/start.mjs --demo",
         "simulate": "npm run simulate -w @gomeal/backend --",
         "test": "node scripts/test.mjs",
+        "lint": "eslint . --max-warnings 0",
         "test:backend": "npm test -w @gomeal/backend",
         "test:database": "npm test -w @gomeal/database",
         "coverage": "npm run test:coverage -w @gomeal/backend",
         "migrate": "npm run migrate -w @gomeal/database",
         "benchmark": "npm run benchmark -w @gomeal/database"
+    },
+    "devDependencies": {
+        "@eslint/js": "10.0.1",
+        "eslint": "10.13.0",
+        "eslint-plugin-sonarjs": "4.2.2",
+        "globals": "17.13.0"
     }
 }

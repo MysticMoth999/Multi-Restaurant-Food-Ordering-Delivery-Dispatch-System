@@ -1,0 +1,57 @@
+✔ AI-01: malformed alias optionIds returns 400 instead of internal 500 (404.2102ms)
+✔ AI-02: password spaces are significant and cannot authenticate a different password (383.9249ms)
+✔ AI-03: empty location query values are invalid, numeric zero is valid (320.8634ms)
+✔ Cart HTTP: ownership, CRUD, options, single restaurant and checkout (546.1757ms)
+✔ Dispatch rejects failed conditional reservation and rolls back (599.8461ms)
+✔ Dispatch: driver going online after the retry was scheduled is invited at once (299.0262ms)
+✔ Dispatch: restaurant without valid coordinates is not dispatched (287.8425ms)
+✔ Auth: expired sessions are purged and rejected (379.862ms)
+✔ Billing: correct VND, options, quantities and snapshots (311.0406ms)
+✔ Billing: canonical options merge equal lines and reject inconsistent aliases (297.6474ms)
+✔ CreateOrder: replay, key conflict, changed price and missing phone (304.8358ms)
+✔ 20 injected CreateOrder failures rollback all business rows (300.2663ms)
+✔ Mock FAILED rolls back; COD still works; refunds and voids (307.6221ms)
+✔ Order transitions enforce version, role, ownership and cancellation policy (314.2449ms)
+✔ Dispatch: Haversine, tie-break, decline, expiration, retry and stale location (323.9764ms)
+✔ Dispatch: older updated_at wins ties; offline revokes; invalid coordinates rejected (311.3272ms)
+✔ Delivery: COD confirmation, driver release and replay are atomic (291.1955ms)
+✔ Atomic rollback on assignment, cancellation and completion failures (477.5317ms)
+✔ Delivery fee: km tiers, fuel price, order value discount and 10 km limit (316.5316ms)
+✔ Vouchers: discount, single use per customer, returned on cancel, owner and expiry rules (288.5688ms)
+✔ Notifications: order, status, offer, payment confirmation and read state per user (305.2196ms)
+✔ Tracking: driver location and contacts appear only while the order is on the road (295.9944ms)
+✔ Menu image upload: owner only, real image bytes, 2 MB limit, served from /media (472.6608ms)
+✔ HTTP full lifecycle uses authenticated identity and optimistic version (508.1627ms)
+✔ Sensitive API role matrix rejects anonymous and wrong-role calls (492.9439ms)
+✔ Ownership, token expiry, lock revocation, register and safe error envelopes (554.3576ms)
+✔ Catalog/menu/options/admin API support review scenarios (383.1693ms)
+✔ 100 HTTP dispatch rounds: 20 orders, 5 drivers, double accepts and late accepts (8791.9975ms)
+✔ RAM adapter isolates instances and read copies; thrown work rolls back (2.2892ms)
+✔ RAM demo server entry point and demo script work together (884.0738ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21390.5696
+ℹ start of coverage report
+ℹ --------------------------------------------------------------------------
+ℹ file                      | line % | branch % | funcs % | uncovered lines
+ℹ --------------------------------------------------------------------------
+ℹ src                       |        |          |         | 
+ℹ  services                 |        |          |         | 
+ℹ   admin-service.js        |  94.69 |    82.76 |   90.00 | 82-86 123-128
+ℹ   auth-service.js         |  97.54 |    93.33 |  100.00 | 98-100
+ℹ   billing-service.js      | 100.00 |    97.33 |   92.86 | 
+ℹ   cart-service.js         | 100.00 |   100.00 |  100.00 | 
+ℹ   catalog-service.js      |  92.37 |    93.41 |   81.25 | 53-69 242-244
+ℹ   dispatch-service.js     |  99.64 |    98.63 |   96.30 | 102
+ℹ   notification-service.js |  90.65 |    91.67 |  100.00 | 18-19 121-131
+ℹ   order-service.js        | 100.00 |    98.41 |   93.33 | 
+ℹ   payment-service.js      |  95.83 |    94.74 |  100.00 | 35-36
+ℹ --------------------------------------------------------------------------
+ℹ all files                 |  96.79 |    94.43 |   92.57 | 
+ℹ --------------------------------------------------------------------------
+ℹ end of coverage report

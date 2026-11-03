@@ -41,6 +41,8 @@ npm run check
 npm test
 npm run test:mysql
 npm run test:coverage
+npm run lint        # ESLint + SonarJS (cấu hình eslint.config.js ở gốc repo)
+npm run quality     # cú pháp + lint + test có ngưỡng coverage 70%, ghi kết quả vào reports/
 ```
 
 - src/services/: nghiệp vụ M2; src/app.js: HTTP controller và phân quyền.
@@ -50,6 +52,7 @@ npm run test:coverage
 - docs/M3-CONTRACT.md: hợp đồng dữ liệu đề xuất để bàn với M3.
 - docs/INTEGRATION.md: các chỗ M1 cần sửa khi nối API.
 - docs/REQUIREMENTS.md và TEST-RESULTS.md: đối chiếu yêu cầu, bằng chứng và giới hạn.
+- docs/KIEM-THU-TINH-DONG-AI.md, test/ai-regression.test.js, reports/: kiểm thử tĩnh/động có AI hỗ trợ (3 lỗi tìm được và test tái hiện).
 
 MemoryStore dùng bản sao bộ nhớ và queue transaction async; npm test kiểm test double. npm run test:mysql chạy các fixture nghiệp vụ trên schema gomeal_m2_test riêng (trừ test adapter RAM và runtime demo có chủ đích). M3 có thêm kiểm nhiều kết nối, rollback, restart/crash và NFR trong database/docs. Cần chạy lại E2E khi ghép M4.
 

@@ -1,6 +1,6 @@
 # Ghép M1 và M3 sau khi nhóm duyệt
 
-Ngày 21/10/2026 đã tích hợp MySQL 8 theo yêu cầu M3: server mặc định dùng MysqlStore, service/controller đã chuyển async/await; MemoryStore còn phục vụ test. Xem database/README.md và database/docs/M4-HANDOFF.md cho cấu hình, migration và kiểm lại. Các hướng dẫn M1 dưới đây giữ cùng HTTP DTO.
+Ngày 21/10/2026 đã tích hợp MySQL 8 theo yêu cầu M3: server mặc định dùng MysqlStore, service/controller đã chuyển async/await; MemoryStore còn phục vụ test. Xem database/README.md cho cấu hình, migration và kiểm lại. Các hướng dẫn M1 dưới đây giữ cùng HTTP DTO.
 
 ## M1
 

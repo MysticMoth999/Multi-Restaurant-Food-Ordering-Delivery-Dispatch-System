@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T04:44:50.594Z",
+  "generatedAt": "2026-11-03T05:06:57.406Z",
   "environment": {
     "node": "v25.1.0",
     "platform": "win32",
@@ -12,19 +12,19 @@
     {
       "name": "syntax",
       "exitCode": 0,
-      "durationMs": 1457,
+      "durationMs": 1484,
       "passed": true
     },
     {
       "name": "static",
       "exitCode": 0,
-      "durationMs": 3785,
+      "durationMs": 3378,
       "passed": true
     },
     {
       "name": "dynamic",
       "exitCode": 0,
-      "durationMs": 21918,
+      "durationMs": 21518,
       "passed": true
     }
   ]

@@ -92,7 +92,7 @@ jobs:
           {
             echo "### Coverage service backend"
             echo '```'
-            grep -E "^ℹ (tests|pass|fail)|^ℹ .*\|" coverage.txt | sed 's/^ℹ //'
+            grep -E "^ℹ (tests|pass|fail)|^ℹ .*\|" coverage.txt | sed 's/^ℹ //' || true
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 

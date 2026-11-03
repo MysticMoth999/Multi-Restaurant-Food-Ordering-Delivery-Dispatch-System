@@ -1,21 +1,52 @@
-# Chạy toàn bộ test mỗi khi mở/cập nhật Pull Request và khi main thay đổi.
-# Dùng MySQL 8 dạng service container; cấu hình CSDL truyền bằng biến môi trường (đè lên .env tạo từ .env.example).
+# Chạy mỗi khi mở/cập nhật Pull Request, khi main thay đổi, hoặc bấm tay (Actions → CI → Run workflow).
+# Hai job chạy song song; cả hai nên được đặt là status check bắt buộc của main (CONTRIBUTING.md).
+# Không dùng needs giữa hai job: job bị bỏ qua được GitHub tính là đạt, PR lỗi lint sẽ lọt qua check bắt buộc.
 name: CI
 
 on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Kiểm tra tĩnh (ESLint + SonarJS)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Cài thư viện (npm workspaces)
+        run: npm ci
+
+      - name: Kiểm tra cú pháp backend
+        run: npm run check -w @gomeal/backend
+
+      - name: ESLint + SonarJS (frontend, backend, database, scripts)
+        run: npm run lint
+
+      - name: Lỗ hổng đã biết trong thư viện chạy thật
+        run: npm audit --omit=dev --audit-level=high
+
   test:
+    # Tên này đang là status check bắt buộc của main; đổi tên thì phải chọn lại trong Settings → Branches.
     name: Test backend + database
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    # Dùng MySQL 8 dạng service container; cấu hình CSDL truyền bằng biến môi trường (đè lên .env tạo từ .env.example).
     services:
       mysql:
         image: mysql:8.0
@@ -35,6 +66,9 @@ jobs:
       DB_PASSWORD: ci-password
       MYSQL_ROOT_PASSWORD: root
       TZ: Asia/Ho_Chi_Minh
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
 
@@ -46,9 +80,6 @@ jobs:
       - name: Cài thư viện (npm workspaces)
         run: npm ci
 
-      - name: Kiểm tra cú pháp backend
-        run: npm run check -w @gomeal/backend
-
       - name: Tạo CSDL, tài khoản, migration, dữ liệu demo
         run: npm run setup -- --skip-install
 
@@ -56,4 +87,33 @@ jobs:
         run: npm test
 
       - name: Coverage service backend (NFR-04)
-        run: npm run coverage
+        run: |
+          npm run coverage | tee coverage.txt
+          {
+            echo "### Coverage service backend"
+            echo '```'
+            grep -E "^ℹ (tests|pass|fail)|^ℹ .*\|" coverage.txt | sed 's/^ℹ //'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Chạy thử server trên MySQL (API + giao diện)
+        run: |
+          npm run start -w @gomeal/backend > server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:3000/api/health && break; sleep 1; done
+          curl -fs http://127.0.0.1:3000/api/health | grep -q '"ok"'
+          curl -fs http://127.0.0.1:3000/api/config > /dev/null
+          curl -fs "http://127.0.0.1:3000/api/restaurants?lat=10.7705&lng=106.6932" | grep -q '"items"'
+          curl -fs http://127.0.0.1:3000/ | grep -qi '<html'
+          curl -fs http://127.0.0.1:3000/js/map.js > /dev/null
+          echo "Server chạy được: API, CSDL demo và giao diện đều trả về." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Lưu kết quả coverage và log server
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ket-qua-test
+          path: |
+            coverage.txt
+            server.log
+          if-no-files-found: ignore
+          retention-days: 14

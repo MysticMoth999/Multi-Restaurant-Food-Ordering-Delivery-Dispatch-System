@@ -4,6 +4,7 @@ import { mkdtemp, rm, readdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fixture, serve, requestBody, createOrder, readyOrder, online, DELIVERY_POINT } from "./helpers.js";
+import { createApp } from "../src/app.js";
 const fails = async (fn, code, pattern) => await assert.rejects(fn, error => error.code === code && (!pattern || pattern.test(error.message)));
 // Điểm cách nhà hàng 1 (10.7705, 106.6932) khoảng d km về phía bắc.
 const north = km => ({
@@ -262,4 +263,20 @@ test("Menu image upload: owner only, real image bytes, 2 MB limit, served from /
   await assert.rejects(async () => await s.catalog.saveItem(await s.user(11), 1, {
     ingredients: "x".repeat(1001)
   }), error => error.code === "VALIDATION");
+});
+test("Map config: Google Maps key only when configured, otherwise OpenStreetMap", async t => {
+  const s = await fixture();
+  const plain = createApp(s).listen(0, "127.0.0.1");
+  const google = createApp(s, { googleMapsApiKey: "test-browser-key" }).listen(0, "127.0.0.1");
+  t.after(async () => {
+    for (const server of [plain, google]) {
+      server.closeAllConnections();
+      await new Promise(resolve => server.close(resolve));
+    }
+    await s.store.close();
+  });
+  await Promise.all([plain, google].map(server => new Promise(resolve => server.listening ? resolve() : server.once("listening", resolve))));
+  const config = async server => (await (await fetch(`http://127.0.0.1:${server.address().port}/api/config`)).json()).data.maps;
+  assert.deepEqual(await config(plain), { provider: "openstreetmap", googleMapsApiKey: null });
+  assert.deepEqual(await config(google), { provider: "google", googleMapsApiKey: "test-browser-key" });
 });

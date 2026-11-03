@@ -41,7 +41,7 @@ npm run setup
 npm start
 ```
 
-Mở **http://127.0.0.1:3000**. Mật khẩu chung `demo12345`: `khach@gomeal.vn`, `nhahang@gomeal.vn`, `taixe@gomeal.vn`, `admin@gomeal.vn`.
+Mở **http://127.0.0.1:3000**. Mật khẩu chung `demo12345`: `khach@gomeal.vn`, `nhahang@gomeal.vn` (đến `nhahang5`, 5 nhà hàng Nhật, Việt, Ý, đồ uống), `taixe@gomeal.vn`, `admin@gomeal.vn`. Bản đồ vẽ đường đi theo đường phố; điền `GOOGLE_MAPS_API_KEY` trong `.env` để dùng Google Maps (xem docs/HUONG-DAN-CHAY.md).
 
 | Lệnh | Việc |
 |---|---|

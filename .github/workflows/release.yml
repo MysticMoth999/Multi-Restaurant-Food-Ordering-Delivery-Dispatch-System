@@ -1,0 +1,39 @@
+# Phát hành (CD): gắn tag v* trên main (CONTRIBUTING.md, mục Mốc phát hành) thì tạo GitHub Release
+# kèm gói mã nguồn, để giảng viên tải đúng phiên bản của từng mốc. Test đầy đủ trên MySQL đã chạy ở CI của main.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Phát hành bản nộp
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Cài thư viện
+        run: npm ci
+
+      - name: Kiểm tra lại trước khi phát hành (lint + test backend trên RAM)
+        run: |
+          npm run lint
+          npm test -w @gomeal/backend
+
+      - name: Đóng gói mã nguồn
+        run: git archive --format=zip --prefix="gomeal-${GITHUB_REF_NAME}/" -o "gomeal-${GITHUB_REF_NAME}.zip" HEAD
+
+      - name: Tạo GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" "gomeal-${GITHUB_REF_NAME}.zip" --title "GoMeal $GITHUB_REF_NAME" --generate-notes --verify-tag

@@ -37,7 +37,7 @@ npm start
 
 Thấy dòng `Giao diện GoMeal: http://127.0.0.1:3000/` thì mở địa chỉ đó. `npm start` tự bật MySQL nếu đang tắt (ví dụ sau khi khởi động lại máy). **Tắt:** Ctrl+C. MySQL vẫn chạy nền; muốn tắt hẳn: `powershell -ExecutionPolicy Bypass -File database/scripts/mysql-local.ps1 stop`.
 
-Bản đồ dùng ảnh nền OpenStreetMap nên máy cần **Internet**; không có mạng thì các chức năng khác vẫn chạy, chỉ khung bản đồ báo không tải được.
+Bản đồ cần **Internet** và vẽ **đường đi theo đường phố** (không nối thẳng hai điểm): đường nhà hàng → điểm giao khi khách chọn điểm giao, đường tài xế còn phải đi khi theo dõi đơn, kèm quãng đường và thời gian ước tính. Mặc định dùng OpenStreetMap + dịch vụ chỉ đường OSRM, không cần đăng ký. Muốn dùng **Google Maps**: tạo API key trên Google Cloud, bật *Maps JavaScript API* và *Routes API*, giới hạn key theo HTTP referrer `http://127.0.0.1:3000/*`, rồi điền `GOOGLE_MAPS_API_KEY=` trong `.env` và chạy lại `npm start`. Key sai hoặc chưa bật API thì giao diện tự quay về OpenStreetMap. Không có mạng thì các chức năng khác vẫn chạy, chỉ khung bản đồ báo không tải được.
 
 **Máy không có MySQL hoặc muốn dữ liệu sạch mỗi lần chạy:** dữ liệu nằm trong RAM, mất khi tắt:
 
@@ -56,7 +56,7 @@ Mật khẩu chung: `demo12345`. Đăng nhập xong, hệ thống tự đưa v�
 |---|---|---|
 | khach@gomeal.vn, khach2@gomeal.vn | Khách | index.html, orders.html |
 | chuacosdt@gomeal.vn | Khách chưa có SĐT (để demo bắt buộc nhập SĐT trước khi đặt) | |
-| nhahang@gomeal.vn (Hokkaido Sachi), nhahang2@gomeal.vn (Sushi Góc Phố) | Quản lý nhà hàng | restaurant-management.html |
+| nhahang@gomeal.vn (Hokkaido Sachi), nhahang2@gomeal.vn (Sushi Góc Phố), nhahang3@gomeal.vn (Phở Bắc Hà Nội), nhahang4@gomeal.vn (Napoli Pizza & Pasta), nhahang5@gomeal.vn (Trà Sữa Mây) | Quản lý nhà hàng | restaurant-management.html |
 | taixe@gomeal.vn … taixe5@gomeal.vn | Tài xế (ban đầu ngoại tuyến) | driver.html |
 | admin@gomeal.vn | Quản trị | admin.html |
 
@@ -79,7 +79,7 @@ Demo nhiều vai cùng lúc: mỗi vai một tab mới (tự gõ địa chỉ), 
 
 Mỗi bước, người liên quan nhận thông báo ở chuông 🔔 (kèm toast; bấm "Bật thông báo trình duyệt" để nhận cả khi tab ẩn). Ví/thẻ giả lập báo "Xác nhận đã thanh toán" ngay khi đặt; COD báo khi tài xế xác nhận thu tiền.
 
-Trên trang tài xế, bật **"Mô phỏng di chuyển (demo)"** để xe tự chạy tới nhà hàng rồi tới điểm giao (gửi vị trí 5 giây/lần); khách thấy xe chạy trên bản đồ.
+Trên trang tài xế, bật **"Mô phỏng di chuyển (demo)"** để xe tự chạy theo đường phố tới nhà hàng rồi tới điểm giao (gửi vị trí 5 giây/lần); khách thấy xe chạy trên bản đồ. Nút **🧭 Chỉ đường trên Google Maps** mở ứng dụng Google Maps với điểm đi/đến sẵn.
 
 ### Chạy mô phỏng tự động
 
@@ -89,7 +89,7 @@ Khi backend đang chạy, mở thêm một cửa sổ tại thư mục gốc rep
 npm run simulate -- --orders 4 --every 15
 ```
 
-Khách `khach@gomeal.vn` tự đặt 4 đơn (mỗi 15 giây một đơn, điểm giao ngẫu nhiên 0,8–3,5 km), hai nhà hàng tự xác nhận, `taixe2`–`taixe5` tự nhận đơn và chạy trên bản đồ tới khi giao xong. Đăng nhập `khach@gomeal.vn` ở trang "Đơn của tôi" để xem. `taixe@gomeal.vn` không bị mô phỏng điều khiển nên bạn vẫn tự nhận đơn được. Ctrl+C để dừng (tài xế mô phỏng tự về ngoại tuyến).
+Khách `khach@gomeal.vn` tự đặt 4 đơn (mỗi 15 giây một đơn, điểm giao ngẫu nhiên 0,8–3,5 km), các nhà hàng tự xác nhận, `taixe2`–`taixe5` tự nhận đơn và chạy trên bản đồ tới khi giao xong. Đăng nhập `khach@gomeal.vn` ở trang "Đơn của tôi" để xem. `taixe@gomeal.vn` không bị mô phỏng điều khiển nên bạn vẫn tự nhận đơn được. Ctrl+C để dừng (tài xế mô phỏng tự về ngoại tuyến).
 
 Trạng thái đơn: `PENDING → CONFIRMED → PREPARING → READY_FOR_PICKUP → DRIVER_ASSIGNED → PICKED_UP → DELIVERING → DELIVERED`; `CANCELLED` khi khách hủy lúc PENDING hoặc quản lý hủy lúc PENDING/CONFIRMED.
 
@@ -109,7 +109,7 @@ Trạng thái đơn: `PENDING → CONFIRMED → PREPARING → READY_FOR_PICKUP �
 | Thời hạn (60 s, 2 phút, 30 s, phiên 1 giờ), bảng phí theo km | `backend/src/domain/constants.js` |
 | Thông báo | `backend/src/services/notification-service.js`; chuông ở `frontend/js/app.js` |
 | Voucher, giá xăng | `billing-service.js`, `admin-service.js` |
-| Bản đồ | `frontend/js/map.js` (Leaflet + OpenStreetMap) |
+| Bản đồ, đường đi | `frontend/js/map.js` (Google Maps + Routes API khi có key; không thì Leaflet + OpenStreetMap + OSRM) |
 | Mô phỏng vận hành | `backend/scripts/simulate.js` |
 | Bảng, ràng buộc, index | `database/sql/schema.sql`, `database/docs/ERD_Specification.md` |
 | Đọc/ghi MySQL, transaction | `database/src/mysql-store.js` |
@@ -139,5 +139,7 @@ Test chỉ xóa các schema có đuôi `_test`; không đụng dữ liệu demo 
 | Báo giá thay đổi khi đặt | Giá/món đổi sau khi xem giỏ; xem lại giỏ và xác nhận lại |
 | Báo "ngoài phạm vi giao 10 km" | Điểm giao chọn quá xa nhà hàng; chọn lại điểm gần hơn trên bản đồ |
 | Voucher báo lỗi | Đọc lý do ở dưới ô voucher: chưa đủ giá trị đơn, đã dùng, hết hạn, hoặc voucher riêng của khách khác |
-| Bản đồ trống | Máy không có Internet hoặc mạng chặn tile.openstreetmap.org |
+| Bản đồ trống | Máy không có Internet hoặc mạng chặn tile.openstreetmap.org / maps.googleapis.com |
+| Bản đồ có ghi "ước tính đường thẳng" | Dịch vụ chỉ đường (Google Routes API hoặc router.project-osrm.org) không trả lời; trang tự thử lại sau 30 giây |
+| Đã điền GOOGLE_MAPS_API_KEY nhưng vẫn là OpenStreetMap | Key sai, chưa bật Maps JavaScript API/Routes API, hoặc referrer không khớp địa chỉ đang mở; xem Console (F12) |
 | Trang báo không tìm thấy bảng/cột | Server tự migrate khi khởi động; nếu vẫn lỗi, chạy `npm run migrate` ở gốc repo |

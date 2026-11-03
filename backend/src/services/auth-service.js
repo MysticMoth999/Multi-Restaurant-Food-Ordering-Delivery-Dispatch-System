@@ -10,6 +10,11 @@ function verify(password, stored) {
   return timingSafeEqual(Buffer.from(hash, "hex"), scryptSync(password, salt, 64));
 }
 const tokenHash = token => createHash("sha256").update(token).digest("hex");
+// Mật khẩu là bí mật nguyên văn: không trim, khoảng trắng đầu/cuối có nghĩa (AI-02).
+function passwordValue(value, minimumLength = 6) {
+  ensure(typeof value === "string" && value.length >= minimumLength && value.length <= 128 && value.trim().length > 0, "VALIDATION", `Mật khẩu phải có ${minimumLength}–128 ký tự và không chỉ chứa khoảng trắng.`);
+  return value;
+}
 export const userView = user => ({
   id: user.id,
   name: user.name,
@@ -30,8 +35,7 @@ export class AuthService {
     const email = text(body.email, "email", 254).toLowerCase();
     ensure(/^\S+@\S+\.\S+$/.test(email), "VALIDATION", "Email không hợp lệ.");
     const name = text(body.name, "name", 100);
-    const password = text(body.password, "password", 128);
-    ensure(password.length >= 6, "VALIDATION", "Mật khẩu tối thiểu 6 ký tự.");
+    const password = passwordValue(body.password);
     const contact = body.phone ? phone(body.phone) : null;
     const hash = hashPassword(password);
     return await this.store.transaction(async () => {
@@ -50,7 +54,7 @@ export class AuthService {
   }
   async login(body) {
     const email = text(body.email, "email", 254).toLowerCase();
-    const password = text(body.password, "password", 128);
+    const password = passwordValue(body.password, 1);
     const user = await this.store.find("users", {
       email
     });

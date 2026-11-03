@@ -14,7 +14,10 @@
         "test": "node --test --test-concurrency=1 test/*.test.js",
         "test:mysql": "node --env-file-if-exists=../.env scripts/test-mysql.js",
         "test:coverage": "node --test --test-concurrency=1 --experimental-test-coverage --test-coverage-include=src/services/*.js test/*.test.js",
-        "check": "node scripts/check.js"
+        "check": "node scripts/check.js",
+        "lint": "eslint . --max-warnings 0",
+        "test:regression": "node --test test/ai-regression.test.js",
+        "quality": "node scripts/verify-quality.js"
     },
     "dependencies": {
         "express": "5.1.0"

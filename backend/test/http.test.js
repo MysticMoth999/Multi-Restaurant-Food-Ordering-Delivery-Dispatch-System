@@ -242,7 +242,9 @@ test("Catalog/menu/options/admin API support review scenarios", async t => {
     status: "INACTIVE"
   }, admin)).status, 200);
   assert.equal((await http.call("GET", "/restaurants/1/menu")).status, 404);
-  assert.equal((await http.call("GET", "/restaurants")).json.data.total, 1);
+  const listed = (await http.call("GET", "/restaurants")).json.data;
+  assert.equal(listed.total, (await s.store.rows("restaurants")).length - 1);
+  assert.ok(!listed.items.some(r => r.id === 1));
   assert.equal((await http.call("PATCH", "/admin/restaurants/1", {
     status: "ACTIVE"
   }, admin)).status, 200);

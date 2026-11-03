@@ -19,7 +19,7 @@
     const rating = r => r.rating != null ? `<span><strong>★ ${App.esc(r.rating)}</strong> (${App.esc(r.ratingCount ?? 0)} đánh giá)</span>` : "";
     const card = r => `
         <article class="restaurant-card card">
-            <img class="restaurant-cover" src="./${App.esc(r.cover || App.FALLBACK_COVER)}" alt="Món ăn tại ${App.esc(r.name)}">
+            <img class="restaurant-cover" src="./${App.esc(App.coverOf(r))}" alt="Món ăn tại ${App.esc(r.name)}">
             <div class="restaurant-info">
                 <h3>${App.esc(r.name)}</h3><p>${App.esc(r.cuisine)}</p>
                 <div class="restaurant-meta">${rating(r)}<span>📍 ${App.esc(r.address)}</span>${r.eta ? `<span>${App.esc(r.eta)}</span>` : ""}</div>

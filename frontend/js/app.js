@@ -61,6 +61,9 @@
 
     // API M2 chưa có ảnh/logo/rating/ETA: dùng ảnh chung của giao diện, ẩn các số liệu chưa có.
     App.FALLBACK_COVER = "img/sushiback.jpg";
+    // API chưa có ảnh bìa nhà hàng: chọn ảnh theo loại ẩm thực, còn lại dùng ảnh chung.
+    const CUISINE_COVER = { "Việt Nam": "img/covers/cover-viet.jpg", "Ý": "img/covers/cover-y.jpg", "Đồ uống & tráng miệng": "img/covers/cover-do-uong.jpg" };
+    App.coverOf = r => r.cover || CUISINE_COVER[r.cuisine] || App.FALLBACK_COVER;
 
     App.showUser = user => {
         document.querySelectorAll("[data-user-name]").forEach(el => { el.textContent = user.name; });

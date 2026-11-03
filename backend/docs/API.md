@@ -25,6 +25,7 @@ Email không phân biệt hoa thường. Mật khẩu 6–128 ký tự, phone n�
 | GET | /restaurants?q=...&page=1 | Công khai | ACTIVE, 20/trang; tìm theo tên; có thể thêm `lat,lng`, lọc 5 km, gần trước |
 | GET | /restaurants/:id/menu | Công khai | `{restaurant,items}`; món có `options:[{id,name,surcharge,available}]` |
 | GET | /pricing | Công khai | Bảng phí giao theo bậc km (đã nhân giá xăng), giá xăng, mức giảm theo giá trị đơn |
+| GET | /config | Công khai | `{maps:{provider,googleMapsApiKey}}`: `provider` là `google` khi `.env` có `GOOGLE_MAPS_API_KEY`, ngược lại `openstreetmap` (key `null`). Giao diện dùng để chọn bản đồ và dịch vụ chỉ đường |
 | POST | /cart/quote | Công khai; gửi token để dùng voucher | `{restaurantId,items,deliveryLocation?,voucherCode?}` → quote bên dưới |
 | GET | /vouchers/mine | CUSTOMER | `{items}`: voucher khách còn dùng được |
 | GET | /manager/dashboard?restaurantId=1 | MANAGER sở hữu | `{restaurant,items,orders}`; tối đa 100 đơn mới nhất |

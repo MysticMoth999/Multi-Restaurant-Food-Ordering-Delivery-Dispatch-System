@@ -182,6 +182,13 @@ export function createApp(system, options = {}) {
   app.get("/api/restaurants", send(async req => await catalog.list(req.query)));
   app.get("/api/restaurants/:id/menu", send(async req => await catalog.menu(id(req))));
   app.get("/api/pricing", send(async () => await billing.pricing()));
+  // Cấu hình công khai cho giao diện. Key Google Maps là key trình duyệt (giới hạn theo tên miền trên Google Cloud), không phải bí mật máy chủ.
+  app.get("/api/config", send(() => ({
+    maps: {
+      provider: options.googleMapsApiKey ? "google" : "openstreetmap",
+      googleMapsApiKey: options.googleMapsApiKey || null
+    }
+  })));
   app.post("/api/cart/quote", maybeIdentify, send(async req => await billing.quote(req.body.restaurantId, req.body.items, {
     deliveryLocation: req.body.deliveryLocation,
     voucherCode: req.body.voucherCode,
@@ -277,7 +284,7 @@ export function createApp(system, options = {}) {
     error: "API không tồn tại.",
     requestId: req.requestId
   }));
-  app.use((error, req, res, next) => {
+  app.use((error, req, res, _next) => {
     let status = 500;
     let code = "INTERNAL";
     let message = "Lỗi hệ thống; hãy thử lại.";

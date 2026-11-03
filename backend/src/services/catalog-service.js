@@ -40,6 +40,10 @@ export class CatalogService {
   async list(query) {
     const page = integer(Number(query.page ?? 1), "page");
     const hasLocation = query.lat !== undefined || query.lng !== undefined;
+    // Number("") là 0 nên phải chặn tọa độ trống trước khi chuyển kiểu (AI-03).
+    if (hasLocation) {
+      ensure([query.lat, query.lng].every(value => (typeof value === "string" && value.trim().length > 0) || typeof value === "number"), "VALIDATION", "Cần nhập đủ lat và lng hợp lệ.");
+    }
     const point = hasLocation ? location({
       lat: Number(query.lat),
       lng: Number(query.lng)

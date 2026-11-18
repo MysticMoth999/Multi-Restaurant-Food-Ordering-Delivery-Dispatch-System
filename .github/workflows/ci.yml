@@ -117,3 +117,4 @@ jobs:
             server.log
           if-no-files-found: ignore
           retention-days: 14
+              name: E2E (Playwright)

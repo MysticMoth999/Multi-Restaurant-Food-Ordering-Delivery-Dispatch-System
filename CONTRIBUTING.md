@@ -47,6 +47,7 @@ Lời nhắn commit: `<phần>: <việc đã làm>`, ví dụ `m1: thêm bản �
 | `.github/workflows/ci.yml` — job **Kiểm tra tĩnh (ESLint + SonarJS)** | Mỗi PR, mỗi lần `main` đổi, bấm tay | `npm ci`, kiểm cú pháp backend, `npm run lint` cả repo, `npm audit` thư viện chạy thật |
 | `.github/workflows/ci.yml` — job **Test backend + database** | Như trên | MySQL 8 (service container), `npm run setup`, `npm test`, coverage (in ra trang tóm tắt của lần chạy), chạy thử server và gọi API + giao diện; lưu coverage và log server thành artifact `ket-qua-test` |
 | `.github/workflows/release.yml` | Đẩy tag `v*` | Lint + test lại, tạo GitHub Release kèm file zip mã nguồn |
+| `.github/workflows/ci.yml` — job **E2E (Playwright)** | Như trên | `npm ci`, cài Chromium, test API (TC-07, TC-10), test E2E giao diện (desktop và 390 px) trên dữ liệu RAM; lưu báo cáo Playwright thành artifact `ket-qua-e2e` |
 
 Xem kết quả: tab **Actions** → chọn lần chạy (dấu ✔ xanh là đạt). Chụp màn hình lịch sử Actions cho báo cáo ở trang này.
 

@@ -1,0 +1,9 @@
+﻿Γ£ö NFR-06: 100 rounds x 20 orders/5 drivers, concurrent double/late accepts and automatic queue recovery (257669.234ms)
+Γä╣ tests 1
+Γä╣ suites 0
+Γä╣ pass 1
+Γä╣ fail 0
+Γä╣ cancelled 0
+Γä╣ skipped 0
+Γä╣ todo 0
+Γä╣ duration_ms 258351.5719

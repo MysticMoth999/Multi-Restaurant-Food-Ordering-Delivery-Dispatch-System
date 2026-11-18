@@ -9,7 +9,9 @@
     "scripts": {
         "test": "node --test --test-concurrency=1 api-tests/*.test.js",
         "e2e": "playwright test",
-        "e2e:install": "playwright install chromium"
+        "e2e:install": "playwright install chromium",
+        "nfr05": "playwright test -c playwright.nfr.config.js"
+
     },
     "devDependencies": {
         "@playwright/test": "1.63.0"

@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-18T06:49:04.403Z",
+  "engine": "MySQL 8 InnoDB",
+  "rounds": 100,
+  "ordersPerRound": 20,
+  "drivers": 5,
+  "independentPeerPools": 10,
+  "duplicateAccepts": 500,
+  "expiredAccepts": 500,
+  "passed": 100,
+  "resumedWithoutManualRepair": true,
+  "clock": "Controlled monotonically increasing clock"
+}

@@ -9,7 +9,8 @@
     },
     "workspaces": [
         "backend",
-        "database"
+        "database",
+        "tests"
     ],
     "scripts": {
         "setup": "node scripts/setup.mjs",
@@ -22,7 +23,9 @@
         "test:database": "npm test -w @gomeal/database",
         "coverage": "npm run test:coverage -w @gomeal/backend",
         "migrate": "npm run migrate -w @gomeal/database",
-        "benchmark": "npm run benchmark -w @gomeal/database"
+        "benchmark": "npm run benchmark -w @gomeal/database",
+        "e2e": "npm run e2e -w @gomeal/tests",
+        "e2e:install": "npm run e2e:install -w @gomeal/tests"
     },
     "devDependencies": {
         "@eslint/js": "10.0.1",

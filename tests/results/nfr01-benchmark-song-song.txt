@@ -1,0 +1,63 @@
+﻿
+> gomeal@1.0.0 benchmark
+> npm run benchmark -w @gomeal/database
+
+
+> @gomeal/database@0.1.0 benchmark
+> node --env-file-if-exists=../.env scripts/benchmark.js
+
+Benchmark ready: 100 VUs, 120s warm-up + 600s measurement by default.
+{
+  "date": "2026-11-18T06:25:01.229Z",
+  "timezone": "Asia/Bangkok",
+  "node": "v26.13.0",
+  "machine": {
+    "os": "win32 10.0.26300",
+    "cpu": "Intel(R) Core(TM) i3-10110U CPU @ 2.10GHz",
+    "logicalCpus": 4,
+    "ramGB": 7.826744079589844
+  },
+  "database": "gomeal_m3_load",
+  "backend": {
+    "engine": "MySQL InnoDB",
+    "version": "8.4.10",
+    "flushLogAtCommit": 1,
+    "syncBinlog": 1,
+    "binaryLog": 0,
+    "poolSize": 20,
+    "dispatchIntervalMs": 30000
+  },
+  "warmupSeconds": 120,
+  "measureSeconds": 600,
+  "vus": 100,
+  "dataset": {
+    "restaurants": 100,
+    "menuItems": 2000,
+    "orders": 10000
+  },
+  "officialScenario": true,
+  "endpoints": {
+    "restaurants": {
+      "requests": 19261,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Ms": 106.99890000000596,
+      "rps": 32.10166666666667
+    },
+    "menu": {
+      "requests": 19228,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Ms": 71.18960000004154,
+      "rps": 32.04666666666667
+    },
+    "order": {
+      "requests": 19214,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Ms": 116.50680000003194,
+      "rps": 32.02333333333333
+    }
+  },
+  "pass": true
+}

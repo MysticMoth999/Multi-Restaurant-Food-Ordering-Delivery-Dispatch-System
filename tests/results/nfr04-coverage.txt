@@ -1,0 +1,66 @@
+﻿
+> gomeal@1.0.0 coverage
+> npm run test:coverage -w @gomeal/backend
+
+
+> @gomeal/backend@0.1.0 test:coverage
+> node --test --test-concurrency=1 --experimental-test-coverage --test-coverage-include=src/services/*.js test/*.test.js
+
+Γ£ö AI-01: malformed alias optionIds returns 400 instead of internal 500 (906.2531ms)
+Γ£ö AI-02: password spaces are significant and cannot authenticate a different password (849.927ms)
+Γ£ö AI-03: empty location query values are invalid, numeric zero is valid (727.0856ms)
+Γ£ö Cart HTTP: ownership, CRUD, options, single restaurant and checkout (1062.297ms)
+Γ£ö Dispatch rejects failed conditional reservation and rolls back (1491.2459ms)
+Γ£ö Dispatch: driver going online after the retry was scheduled is invited at once (1131.2572ms)
+Γ£ö Dispatch: restaurant without valid coordinates is not dispatched (1192.5077ms)
+Γ£ö Auth: expired sessions are purged and rejected (1540.1867ms)
+Γ£ö Billing: correct VND, options, quantities and snapshots (717.5432ms)
+Γ£ö Billing: canonical options merge equal lines and reject inconsistent aliases (779.4162ms)
+Γ£ö CreateOrder: replay, key conflict, changed price and missing phone (777.9629ms)
+Γ£ö 20 injected CreateOrder failures rollback all business rows (1016.7403ms)
+Γ£ö Mock FAILED rolls back; COD still works; refunds and voids (726.6982ms)
+Γ£ö Order transitions enforce version, role, ownership and cancellation policy (764.4853ms)
+Γ£ö Dispatch: Haversine, tie-break, decline, expiration, retry and stale location (684.0103ms)
+Γ£ö Dispatch: older updated_at wins ties; offline revokes; invalid coordinates rejected (688.902ms)
+Γ£ö Delivery: COD confirmation, driver release and replay are atomic (695.7535ms)
+Γ£ö Atomic rollback on assignment, cancellation and completion failures (686.1439ms)
+Γ£ö Delivery fee: km tiers, fuel price, order value discount and 10 km limit (695.9334ms)
+Γ£ö Vouchers: discount, single use per customer, returned on cancel, owner and expiry rules (678.5606ms)
+Γ£ö Notifications: order, status, offer, payment confirmation and read state per user (670.9732ms)
+Γ£ö Tracking: driver location and contacts appear only while the order is on the road (683.9571ms)
+Γ£ö Menu image upload: owner only, real image bytes, 2 MB limit, served from /media (1051.2391ms)
+Γ£ö Map config: Google Maps key only when configured, otherwise OpenStreetMap (789.783ms)
+Γ£ö HTTP full lifecycle uses authenticated identity and optimistic version (1012.3886ms)
+Γ£ö Sensitive API role matrix rejects anonymous and wrong-role calls (987.8416ms)
+Γ£ö Ownership, token expiry, lock revocation, register and safe error envelopes (1184.9506ms)
+Γ£ö Catalog/menu/options/admin API support review scenarios (812.3147ms)
+Γ£ö 100 HTTP dispatch rounds: 20 orders, 5 drivers, double accepts and late accepts (10976.9781ms)
+Γ£ö RAM adapter isolates instances and read copies; thrown work rolls back (3.7196ms)
+Γ£ö RAM demo server entry point and demo script work together (1508.5141ms)
+Γä╣ tests 31
+Γä╣ suites 0
+Γä╣ pass 31
+Γä╣ fail 0
+Γä╣ cancelled 0
+Γä╣ skipped 0
+Γä╣ todo 0
+Γä╣ duration_ms 39712.8288
+Γä╣ start of coverage report
+Γä╣ --------------------------------------------------------------------------
+Γä╣ file                      | line % | branch % | funcs % | uncovered lines
+Γä╣ --------------------------------------------------------------------------
+Γä╣ src                       |        |          |         | 
+Γä╣  services                 |        |          |         | 
+Γä╣   admin-service.js        |  94.69 |    82.76 |   90.00 | 82-86 123-128
+Γä╣   auth-service.js         |  97.54 |    93.33 |  100.00 | 98-100
+Γä╣   billing-service.js      | 100.00 |    97.33 |   92.86 | 
+Γä╣   cart-service.js         | 100.00 |   100.00 |  100.00 | 
+Γä╣   catalog-service.js      |  92.37 |    93.48 |   84.38 | 53-69 242-244
+Γä╣   dispatch-service.js     |  99.64 |    98.63 |   96.30 | 102
+Γä╣   notification-service.js |  90.65 |    91.67 |  100.00 | 18-19 121-131
+Γä╣   order-service.js        | 100.00 |    98.41 |   93.33 | 
+Γä╣   payment-service.js      |  95.83 |    94.74 |  100.00 | 35-36
+Γä╣ --------------------------------------------------------------------------
+Γä╣ all files                 |  96.79 |    94.44 |   93.14 | 
+Γä╣ --------------------------------------------------------------------------
+Γä╣ end of coverage report

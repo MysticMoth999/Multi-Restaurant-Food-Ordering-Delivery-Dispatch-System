@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-10T07:49:24.894Z",
+  "timezone": "Asia/Bangkok",
+  "node": "v26.13.0",
+  "machine": {
+    "os": "win32 10.0.26300",
+    "cpu": "Intel(R) Core(TM) i3-10110U CPU @ 2.10GHz",
+    "logicalCpus": 4,
+    "ramGB": 7.826744079589844
+  },
+  "database": "gomeal_m3_load",
+  "backend": {
+    "engine": "MySQL InnoDB",
+    "version": "8.4.10",
+    "flushLogAtCommit": 1,
+    "syncBinlog": 1,
+    "binaryLog": 0,
+    "poolSize": 20,
+    "dispatchIntervalMs": 30000
+  },
+  "warmupSeconds": 120,
+  "measureSeconds": 600,
+  "vus": 100,
+  "dataset": {
+    "restaurants": 100,
+    "menuItems": 2000,
+    "orders": 10000
+  },
+  "officialScenario": true,
+  "endpoints": {
+    "restaurants": {
+      "requests": 18606,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Ms": 222.96689999999944,
+      "rps": 31.01
+    },
+    "menu": {
+      "requests": 18577,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Ms": 143.50359999999637,
+      "rps": 30.961666666666666
+    },
+    "order": {
+      "requests": 18577,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Ms": 234.2384000000311,
+      "rps": 30.961666666666666
+    }
+  },
+  "pass": true
+}
